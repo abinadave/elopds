@@ -15,5 +15,6 @@ Route::get('/', 'HomeController@index');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
-    Route::post('/official/skip/take', 'OfficialController@fetch');
+    Route::post('officials_fetch', 'OfficialController@fetch');
+    Route::get('province', 'ProvinceController@fetchUnique');
 });
