@@ -75,13 +75,10 @@
         </nav>
 
         <router-view></router-view>
-         @yield('content')
     </div>
 
     <!-- Scripts -->
-    @if (!Auth::guest())
-        <script src="{{ asset('js/app.js') }}"></script>
-    @endif
+    <script src="{{ asset('js/app.js') }}"></script>
     
 </body>
 </html>
