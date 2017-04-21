@@ -16,7 +16,7 @@
                              {{ arr.CITYMUN }}
                         </option>
                     </select>
-                    <input @keyup.enter="searchQuery" v-model="search" type="text" class="form-control" style="width: 250px; display: inline-block; border-radius: 15px; margin-bottom: 10px" placeholder="Search for local official">
+                    <input @keyup="changeInKeyword" @keyup.enter="searchQuery" v-model="search" type="text" class="form-control" style="width: 250px; display: inline-block; border-radius: 15px; margin-bottom: 10px" placeholder="Search for local official">
                     <table class="table table-condensed table-striped table-bordered" id="table-officials">
                         <thead>
                             <tr>
@@ -31,7 +31,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="official in officials">
+                            <tr style="cursor: pointer" @click="showAdditionalDetials(official)" v-for="official in officials">
                                 <th class="text-center">{{ official.PROVINCE }}</th>
                                 <th class="text-center">{{ official.CITYMUN }}</th>
                                 <th>{{ official.LAST_NAME }}, {{ official.FIRST_NAME }} {{ official.MIDDLE_NAME }}</th>
@@ -45,16 +45,18 @@
                     </table>
                 </div>
             </div>
+            <modal-details :current-official="currentOfficial"></modal-details>
         </div>
 </template>
 <style type="text/css">
     #table-officials {
         font-size: 11px;
     }
-    
 </style>
 <script>
     import moment from 'moment'
+    import alertify from 'alertify.js'
+    import CompAdditionalDetails from './additional_details.vue'
     export default {
         mounted() {
             console.log('Component mounted.');
@@ -72,10 +74,32 @@
                 /* criteria */
                 province: 0,
                 citymun: 0,
-                search: ''
+                search: '',
+                currentOfficial: {
+
+                }
             }
         },
+        components: {
+            'modal-details': CompAdditionalDetails
+        },
         methods: {
+            showAdditionalDetials(official){
+                let self = this;
+                $('#modalAdditionalDetails').modal('show');
+                self.currentOfficial = official;
+            },
+            changeInKeyword(){
+                let self = this;
+                clearTimeout(self.timer);
+                self.timer = setTimeout(function(){
+                    if (self.search == '') {
+                        self.fetch();
+                    }else {
+                        console.log('not empty');
+                    }
+                }, 700);
+            },
             fetchCityMuns(){
                 let self = this;
                 self.$http.get('/citymun').then((resp) => {
@@ -99,6 +123,7 @@
                     return date;
                 }
             },
+           
             fetch(){
                 let self = this;
                 self.$http.post('/officials_fetch', {
@@ -135,10 +160,13 @@
                     if (resp.status === 200) {
                         let json = resp.body;
                         self.officials = json;
+                        if (self.officials.length) {
+                            alertify.success(json.length + ' Result/s was found');
+                        }
                     }
                 }, (resp) => {
                     if (resp.status === 422) {
-                      console.log(resp)
+                        console.log(resp);
                     }
                 });
             },
@@ -152,9 +180,13 @@
                 self.$http.post('/search_query_province', headers).then((resp) => {
                     if (resp.status === 200) {
                         let json = resp.body;
+                        // console.log(json)
                         self.officials = json;
-                        if (!json.length) {
+                        if (self.officials === 0) {
                             alert('As of now, there is no data found in: ' + self.province + ': ' + self.citymun);
+                        }
+                        if (self.officials.length) {
+                            alertify.alert(json.length + ' Results was found')
                         }
                     };
                 }, (resp) => {

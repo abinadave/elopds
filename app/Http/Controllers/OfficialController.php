@@ -21,7 +21,32 @@ class OfficialController extends Controller
             ->where('REGION', 'LIKE', '%' . $search .'%')
             ->orWhere(function ($query) use ($search) {
                 return $query->orWhere('PROVINCE', 'LIKE', '%' . $search .'%')
-                            ->orWhere('CITYMUN', 'LIKE', '%' . $search .'%');
+                            ->orWhere('CITYMUN', 'LIKE', '%' . $search .'%')
+                            ->orWhere('AFFIlIATE', 'LIKE', '%' . $search .'%')
+                            ->orWhere('POSITION_NAME', 'LIKE', '%' . $search .'%')
+                            ->orWhere('OTHER_AFFILIATION', 'LIKE', '%' . $search .'%')
+                            ->orWhere('OTHER_AFFILIATION', 'LIKE', '%' . $search .'%')
+                            ->orWhere('POSITION_NAME', 'LIKE', '%' . $search .'%')
+                            ->orWhere('RANK', 'LIKE', '%' . $search .'%')
+                            ->orWhere('LAST_NAME', 'LIKE', '%' . $search .'%')
+                            ->orWhere('FIRST_NAME', 'LIKE', '%' . $search .'%')
+                            ->orWhere('MIDDLE_NAME', 'LIKE', '%' . $search .'%')
+                            ->orWhere('SUFFIX', 'LIKE', '%' . $search .'%')
+                            ->orWhere('EDUCATION', 'LIKE', '%' . $search .'%')
+                            ->orWhere('BIRTH_DATE', 'LIKE', '%' . $search .'%')
+                            ->orWhere('SEX', 'LIKE', '%' . $search .'%')
+                            ->orWhere('OFFICE_ADDRESS', 'LIKE', '%' . $search .'%')
+                            ->orWhere('CONTACT', 'LIKE', '%' . $search .'%')
+                            ->orWhere('FAX', 'LIKE', '%' . $search .'%')
+                            ->orWhere('CELLPHONE', 'LIKE', '%' . $search .'%')
+                            ->orWhere('EMAIL', 'LIKE', '%' . $search .'%')
+                            ->orWhere('CIVIL_STATUS', 'LIKE', '%' . $search .'%')
+                            ->orWhere('RELIGION', 'LIKE', '%' . $search .'%')
+                            ->orWhere('BASIS_OF_ASSUMPTION', 'LIKE', '%' . $search .'%')
+                            ->orWhere('SERVICE_RECORD', 'LIKE', '%' . $search .'%')
+                            ->orWhere('EDUCATIONAL_ATTAINMENT', 'LIKE', '%' . $search .'%')
+                            ->orWhere('MEMBERSHIP_IN_ORGANIZATION', 'LIKE', '%' . $search .'%')
+                            ->orWhere('ACHIEVEMENT_RECORD', 'LIKE', '%' . $search .'%');
             })
             ->get();
 		}
@@ -78,11 +103,10 @@ class OfficialController extends Controller
 		}
 		return response()->json($resp);
 	}
-
     public function fetch(Request $request){
     	$skip = $request->input('skip');
     	$take = $request->input('take');
-    	$data = Official::take(100)->get();
+    	$data = Official::take(100)->orderBy('LAST_NAME','ASC')->get();
     	return response()->json($data);
     }
 }
