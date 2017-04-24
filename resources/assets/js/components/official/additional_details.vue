@@ -8,53 +8,54 @@
           </div>
           <div class="modal-body">
                 <form class="form-details">
+                        <!-- <input type="text" id="hidden-id"> -->
                     <div class="col-md-5">
                         <label>OFFICE ADDRESS</label>
-                        <input v-model="currentOfficial.OFFICE_ADDRESS" style="width: 300px" type="text" class="form-control" /><br>
+                        <input id="OFFICE_ADDRESS" v-model="currentOfficial.OFFICE_ADDRESS" style="width: 300px" type="text" class="form-control" /><br>
                     </div>
                     <div class="col-md-5">
                         <label>CONTACT</label>
-                        <input v-model="currentOfficial.CONTACT" style="width: 300px" type="text" class="form-control" /><br>
+                        <input id="CONTACT" v-model="currentOfficial.CONTACT" style="width: 300px" type="text" class="form-control" /><br>
                     </div>
                     <div class="col-md-5">
                         <label>EMAIL</label>
-                        <input v-model="currentOfficial.EMAIL" style="width: 300px" type="text" class="form-control" /><br>
+                        <input id="EMAIL" v-model="currentOfficial.EMAIL" style="width: 300px" type="text" class="form-control" /><br>
                     </div>
                     <div class="col-md-5">
                         <label>CELLPHONE NUMBER</label>
-                        <input v-model="currentOfficial.CELLPHONE" style="width: 300px" type="text" class="form-control" /><br>
+                        <input id="CELLPHONE" v-model="currentOfficial.CELLPHONE" style="width: 300px" type="text" class="form-control" /><br>
                     </div>
                     <div class="col-md-5">
                         <label>RELIGION</label>
-                        <input v-model="currentOfficial.RELIGION" style="width: 300px" type="text" class="form-control" /><br>
+                        <input id="RELIGION" v-model="currentOfficial.RELIGION" style="width: 300px" type="text" class="form-control" /><br>
                     </div>
                     <div class="col-md-5">
                         <label>BASIS_OF_ASSUMPTION</label>
-                        <input v-model="currentOfficial.BASIS_OF_ASSUMPTION" style="width: 300px" type="text" class="form-control" /><br>
+                        <input id="BASIS_OF_ASSUMPTION" v-model="currentOfficial.BASIS_OF_ASSUMPTION" style="width: 300px" type="text" class="form-control" /><br>
                     </div>
                    
                     <div class="col-md-5">
                         <label>SERVICE RECORD</label>
-                        <textarea style="margin-top: 20px; width: 300px; height: 100px"  v-model="currentOfficial.SERVICE_RECORD" class="form-control" ></textarea>
+                        <textarea id="SERVICE_RECORD" style="margin-top: 20px; width: 300px; height: 100px"  v-model="currentOfficial.SERVICE_RECORD" class="form-control" ></textarea>
                         <!-- <input  style="width: 300px" type="text" /><br> -->
                     </div>
                     <div class="col-md-5">
-                        <label>DEDUCATIONAL ATTAINMENT</label>
-                        <textarea v-model="currentOfficial.EDUCATIONAL_ATTAINMENT" style="width: 300px; height: 100px; margin-top: 21px" class="form-control"></textarea>
+                        <label>EDUCATIONAL ATTAINMENT</label>
+                        <textarea id="EDUCATIONAL_ATTAINMENT" v-model="currentOfficial.EDUCATIONAL_ATTAINMENT" style="width: 300px; height: 100px; margin-top: 21px" class="form-control"></textarea>
                     </div>
                      <div class="col-md-5">
                         <label>TRAINING STUDY & SCHOOLARSHIP GRANTS</label>
-                        <textarea v-model="currentOfficial.TRAINING_STUDY_AND_SCHOOLARSHIP_GRANTS" style="width: 300px; height: 100px" class="form-control"></textarea>
+                        <textarea id="TRAINING_STUDY_AND_SCHOOLARSHIP_GRANTS" v-model="currentOfficial.TRAINING_STUDY_AND_SCHOOLARSHIP_GRANTS" style="width: 300px; height: 100px" class="form-control"></textarea>
                     </div>
                     <br>
                     <div class="col-md-5" style="margin-top: 20px">
                         <label>MEMBERSHIP_IN_ORGANIZATION</label>
-                        <textarea v-model="currentOfficial.MEMBERSHIP_IN_ORGANIZATION" style="width: 300px; height: 100px" class="form-control"></textarea>
+                        <textarea id="MEMBERSHIP_IN_ORGANIZATION" v-model="currentOfficial.MEMBERSHIP_IN_ORGANIZATION" style="width: 300px; height: 100px" class="form-control"></textarea>
                     </div>
                     <div class="col-md-5" style="margin-top: 20px">
                         <label>ACHIEVEMENT_RECORD</label>
 
-                        <textarea v-model="currentOfficial.ACHIEVEMENT_RECORD" style="width: 300px; height: 100px" class="form-control"></textarea>
+                        <textarea id="ACHIEVEMENT_RECORD" v-model="currentOfficial.ACHIEVEMENT_RECORD" style="width: 300px; height: 100px" class="form-control"></textarea>
                     </div>
                     <!-- <button class="btn btn-info"></button> -->
                 </form> 
@@ -77,20 +78,65 @@
 
 
 <script>
+    import alertify from 'alertify.js'
     export default {
         mounted() {
             let self = this;
-            // $('#modalAdditionalDetails').on('hidden.bs.modal', function(){
-            //     $.each(newObj, function(index, val) {
-            //         if (val == '') {
-            //             self.currentOfficial[index] = '';
-            //         }
-            //     });
-            // });
+            this.initJquery();
         },
         props: {    
             currentOfficial: {
                 type: Object
+            },
+            officials: {
+                type: Array
+            }
+        },
+        methods: {
+            updateElectedOfficial(newValue, id, key){
+                let self = this;
+                let form = {
+                    value: newValue,
+                    id: id,
+                    key: key
+                };
+                self.$http.put('/official', form).then((resp) => {
+                   if (resp.status === 200) {
+                       let json = resp.body;
+                       if (json.updated) {
+                            let rs = _.filter(self.officials, {id: id});
+                            if (rs.length) {
+                                let first = _.first(rs);
+                                self[key] = newValue;
+                                alertify.success('Official successfully updated');
+                            }
+                       }
+                   }
+               }, (resp) => {
+                   if (resp.status === 422) {
+                     console.log(resp)
+                   }
+               });
+
+            },
+            initJquery(){
+                let self = this;
+                let $el = $("#modalAdditionalDetails");
+                $(function() {
+                    let id = null, key = ';'
+                    self.timer = null;
+                    let value = '';
+                    $el.find('input,textarea').keyup(function(event) {
+                        id = self.currentOfficial.id;
+                        key = this.id;
+                        value = $(this).val();
+                        clearTimeout(self.timer);
+                        self.timer = setTimeout(function(){
+                            self.updateElectedOfficial(value, id, key);
+                        }, 1000);
+                        // console.log(value);                        
+                    });
+                });
             }
         },
         watch: {

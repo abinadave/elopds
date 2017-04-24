@@ -49,7 +49,7 @@
                     </table>
                 </div>
             </div>
-            <modal-details :current-official="currentOfficial"></modal-details>
+            <modal-details :officials="officials" :current-official="currentOfficial"></modal-details>
         </div>
 </template>
 <style type="text/css">

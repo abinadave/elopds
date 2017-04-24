@@ -28008,7 +28008,10 @@ module.exports = function spread(callback) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_alertify_js__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_alertify_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_alertify_js__);
+//
 //
 //
 //
@@ -28088,21 +28091,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
         var self = this;
-        // $('#modalAdditionalDetails').on('hidden.bs.modal', function(){
-        //     $.each(newObj, function(index, val) {
-        //         if (val == '') {
-        //             self.currentOfficial[index] = '';
-        //         }
-        //     });
-        // });
+        this.initJquery();
     },
 
     props: {
         currentOfficial: {
             type: Object
+        },
+        officials: {
+            type: Array
+        }
+    },
+    methods: {
+        updateElectedOfficial: function updateElectedOfficial(newValue, id, key) {
+            var self = this;
+            var form = {
+                value: newValue,
+                id: id,
+                key: key
+            };
+            self.$http.put('/official', form).then(function (resp) {
+                if (resp.status === 200) {
+                    var json = resp.body;
+                    if (json.updated) {
+                        var rs = _.filter(self.officials, { id: id });
+                        if (rs.length) {
+                            var first = _.first(rs);
+                            self[key] = newValue;
+                            __WEBPACK_IMPORTED_MODULE_0_alertify_js___default.a.success('Official successfully updated');
+                        }
+                    }
+                }
+            }, function (resp) {
+                if (resp.status === 422) {
+                    console.log(resp);
+                }
+            });
+        },
+        initJquery: function initJquery() {
+            var self = this;
+            var $el = $("#modalAdditionalDetails");
+            $(function () {
+                var id = null,
+                    key = ';';
+                self.timer = null;
+                var value = '';
+                $el.find('input,textarea').keyup(function (event) {
+                    id = self.currentOfficial.id;
+                    key = this.id;
+                    value = $(this).val();
+                    clearTimeout(self.timer);
+                    self.timer = setTimeout(function () {
+                        self.updateElectedOfficial(value, id, key);
+                    }, 1000);
+                    // console.log(value);                        
+                });
+            });
         }
     },
     watch: {
@@ -28116,6 +28164,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     }
 };
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
 
 /***/ }),
 /* 152 */
@@ -48287,6 +48336,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "300px"
     },
     attrs: {
+      "id": "OFFICE_ADDRESS",
       "type": "text"
     },
     domProps: {
@@ -48312,6 +48362,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "300px"
     },
     attrs: {
+      "id": "CONTACT",
       "type": "text"
     },
     domProps: {
@@ -48337,6 +48388,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "300px"
     },
     attrs: {
+      "id": "EMAIL",
       "type": "text"
     },
     domProps: {
@@ -48362,6 +48414,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "300px"
     },
     attrs: {
+      "id": "CELLPHONE",
       "type": "text"
     },
     domProps: {
@@ -48387,6 +48440,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "300px"
     },
     attrs: {
+      "id": "RELIGION",
       "type": "text"
     },
     domProps: {
@@ -48412,6 +48466,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "300px"
     },
     attrs: {
+      "id": "BASIS_OF_ASSUMPTION",
       "type": "text"
     },
     domProps: {
@@ -48438,6 +48493,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "300px",
       "height": "100px"
     },
+    attrs: {
+      "id": "SERVICE_RECORD"
+    },
     domProps: {
       "value": (_vm.currentOfficial.SERVICE_RECORD)
     },
@@ -48449,7 +48507,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("DEDUCATIONAL ATTAINMENT")]), _vm._v(" "), _c('textarea', {
+  }, [_c('label', [_vm._v("EDUCATIONAL ATTAINMENT")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -48461,6 +48519,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "300px",
       "height": "100px",
       "margin-top": "21px"
+    },
+    attrs: {
+      "id": "EDUCATIONAL_ATTAINMENT"
     },
     domProps: {
       "value": (_vm.currentOfficial.EDUCATIONAL_ATTAINMENT)
@@ -48484,6 +48545,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "width": "300px",
       "height": "100px"
+    },
+    attrs: {
+      "id": "TRAINING_STUDY_AND_SCHOOLARSHIP_GRANTS"
     },
     domProps: {
       "value": (_vm.currentOfficial.TRAINING_STUDY_AND_SCHOOLARSHIP_GRANTS)
@@ -48511,6 +48575,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "300px",
       "height": "100px"
     },
+    attrs: {
+      "id": "MEMBERSHIP_IN_ORGANIZATION"
+    },
     domProps: {
       "value": (_vm.currentOfficial.MEMBERSHIP_IN_ORGANIZATION)
     },
@@ -48536,6 +48603,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "width": "300px",
       "height": "100px"
+    },
+    attrs: {
+      "id": "ACHIEVEMENT_RECORD"
     },
     domProps: {
       "value": (_vm.currentOfficial.ACHIEVEMENT_RECORD)
@@ -48727,6 +48797,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("Additional details")])])])
   }))])])]), _vm._v(" "), _c('modal-details', {
     attrs: {
+      "officials": _vm.officials,
       "current-official": _vm.currentOfficial
     }
   })], 1)

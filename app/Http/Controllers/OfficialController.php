@@ -7,6 +7,17 @@ use App\Official as Official;
 use DB;
 class OfficialController extends Controller
 {
+	public function update(Request $request){
+		$value = $request->input('value');
+		$id = $request->input('id');
+		$key = $request->input('key');
+		$model = Official::findOrFail($id);
+		$model[$key] = $value;
+		$rs = $model->save();
+		return response()->json([
+			'updated' => $rs
+		]);
+	}
 	public function searchQueryAll(Request $request){
 		$citymun = $request->input('citymun');
 		$province = $request->input('province');

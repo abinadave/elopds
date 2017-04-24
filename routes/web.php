@@ -22,4 +22,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('search_query_citymun', 'OfficialController@searchQueryCItyMun');
     Route::post('get_relared_mun', 'ProvinceController@fetchRelatedCityMun');
     Route::post('search_query_all', 'OfficialController@searchQueryAll');
+    Route::put('official', 'OfficialController@update');
 });
