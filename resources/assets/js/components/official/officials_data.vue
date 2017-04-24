@@ -17,7 +17,7 @@
                         </option>
                     </select>
                     <input @keyup="changeInKeyword" @keyup.enter="searchQuery" v-model="search" type="text" class="form-control" style="width: 250px; display: inline-block; border-radius: 15px; margin-bottom: 10px" placeholder="Search for local official">
-                    <table class="table table-condensed table-striped table-bordered" id="table-officials">
+                    <table class="table table-condensed table-hover table-striped table-bordered" id="table-officials">
                         <thead>
                             <tr>
                                 <th lass="text-center">PROVINCE</th>
@@ -28,10 +28,12 @@
                                 <th lass="text-center">STATUS</th>
                                 <th>BIRTH DATE</th>
                                 <th lass="text-center">SEX</th>
+                                <th>TERM OFFICE</th>
+                                <th width="150">Additional Description</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="cursor: pointer" @click="showAdditionalDetials(official)" v-for="official in officials">
+                            <tr style="cursor: pointer" v-for="official in officials">
                                 <th class="text-center">{{ official.PROVINCE }}</th>
                                 <th class="text-center">{{ official.CITYMUN }}</th>
                                 <th>{{ official.LAST_NAME }}, {{ official.FIRST_NAME }} {{ official.MIDDLE_NAME }}</th>
@@ -40,6 +42,8 @@
                                 <th class="text-center">{{ official.STATUS }}</th>
                                 <th>{{ getBirthDate(official.BIRTH_DATE) }}</th>
                                 <th class="text-center">{{ official.SEX }}</th>
+                                <th class="text-center">{{ official.TERM_OFFICE }}</th>
+                                <th><a @click="showAdditionalDetials(official)" style="cursor: pointer">Additional details</a></th>
                             </tr>
                         </tbody>
                     </table>
@@ -186,7 +190,7 @@
                             alert('As of now, there is no data found in: ' + self.province + ': ' + self.citymun);
                         }
                         if (self.officials.length) {
-                            alertify.alert(json.length + ' Results was found')
+                            alertify.success(json.length + ' Results was found')
                         }
                     };
                 }, (resp) => {

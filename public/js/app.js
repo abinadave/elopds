@@ -28087,12 +28087,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
-        console.log('Component mounted.');
+        var self = this;
+        // $('#modalAdditionalDetails').on('hidden.bs.modal', function(){
+        //     $.each(newObj, function(index, val) {
+        //         if (val == '') {
+        //             self.currentOfficial[index] = '';
+        //         }
+        //     });
+        // });
     },
 
     props: {
@@ -28102,7 +28107,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     watch: {
         'currentOfficial': function currentOfficial(newObj) {
-            console.log(newObj);
+            var self = this;
+            // $.each(newObj, function(index, val) {
+            //     if (val == '') {
+            //         self.currentOfficial[index] = 'none';
+            //     }
+            // });
         }
     }
 };
@@ -28119,6 +28129,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alertify_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_alertify_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__additional_details_vue__ = __webpack_require__(159);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__additional_details_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__additional_details_vue__);
+//
+//
+//
+//
 //
 //
 //
@@ -28305,7 +28319,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         alert('As of now, there is no data found in: ' + self.province + ': ' + self.citymun);
                     }
                     if (self.officials.length) {
-                        __WEBPACK_IMPORTED_MODULE_1_alertify_js___default.a.alert(json.length + ' Results was found');
+                        __WEBPACK_IMPORTED_MODULE_1_alertify_js___default.a.success(json.length + ' Results was found');
                     }
                 };
             }, function (resp) {
@@ -48237,8 +48251,6 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal fade",
     attrs: {
@@ -48257,7 +48269,291 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "width": "800px"
     }
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_c('form', {
+    staticClass: "form-details"
   }, [_c('div', {
+    staticClass: "col-md-5"
+  }, [_c('label', [_vm._v("OFFICE ADDRESS")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.OFFICE_ADDRESS),
+      expression: "currentOfficial.OFFICE_ADDRESS"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px"
+    },
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.OFFICE_ADDRESS)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.OFFICE_ADDRESS = $event.target.value
+      }
+    }
+  }), _c('br')]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('label', [_vm._v("CONTACT")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.CONTACT),
+      expression: "currentOfficial.CONTACT"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px"
+    },
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.CONTACT)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.CONTACT = $event.target.value
+      }
+    }
+  }), _c('br')]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('label', [_vm._v("EMAIL")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.EMAIL),
+      expression: "currentOfficial.EMAIL"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px"
+    },
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.EMAIL)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.EMAIL = $event.target.value
+      }
+    }
+  }), _c('br')]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('label', [_vm._v("CELLPHONE NUMBER")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.CELLPHONE),
+      expression: "currentOfficial.CELLPHONE"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px"
+    },
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.CELLPHONE)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.CELLPHONE = $event.target.value
+      }
+    }
+  }), _c('br')]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('label', [_vm._v("RELIGION")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.RELIGION),
+      expression: "currentOfficial.RELIGION"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px"
+    },
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.RELIGION)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.RELIGION = $event.target.value
+      }
+    }
+  }), _c('br')]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('label', [_vm._v("BASIS_OF_ASSUMPTION")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.BASIS_OF_ASSUMPTION),
+      expression: "currentOfficial.BASIS_OF_ASSUMPTION"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px"
+    },
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.BASIS_OF_ASSUMPTION)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.BASIS_OF_ASSUMPTION = $event.target.value
+      }
+    }
+  }), _c('br')]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('label', [_vm._v("SERVICE RECORD")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.SERVICE_RECORD),
+      expression: "currentOfficial.SERVICE_RECORD"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "margin-top": "20px",
+      "width": "300px",
+      "height": "100px"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.SERVICE_RECORD)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.SERVICE_RECORD = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('label', [_vm._v("DEDUCATIONAL ATTAINMENT")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.EDUCATIONAL_ATTAINMENT),
+      expression: "currentOfficial.EDUCATIONAL_ATTAINMENT"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px",
+      "height": "100px",
+      "margin-top": "21px"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.EDUCATIONAL_ATTAINMENT)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.EDUCATIONAL_ATTAINMENT = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('label', [_vm._v("TRAINING STUDY & SCHOOLARSHIP GRANTS")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.TRAINING_STUDY_AND_SCHOOLARSHIP_GRANTS),
+      expression: "currentOfficial.TRAINING_STUDY_AND_SCHOOLARSHIP_GRANTS"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px",
+      "height": "100px"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.TRAINING_STUDY_AND_SCHOOLARSHIP_GRANTS)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.TRAINING_STUDY_AND_SCHOOLARSHIP_GRANTS = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5",
+    staticStyle: {
+      "margin-top": "20px"
+    }
+  }, [_c('label', [_vm._v("MEMBERSHIP_IN_ORGANIZATION")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.MEMBERSHIP_IN_ORGANIZATION),
+      expression: "currentOfficial.MEMBERSHIP_IN_ORGANIZATION"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px",
+      "height": "100px"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.MEMBERSHIP_IN_ORGANIZATION)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.MEMBERSHIP_IN_ORGANIZATION = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5",
+    staticStyle: {
+      "margin-top": "20px"
+    }
+  }, [_c('label', [_vm._v("ACHIEVEMENT_RECORD")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentOfficial.ACHIEVEMENT_RECORD),
+      expression: "currentOfficial.ACHIEVEMENT_RECORD"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      "width": "300px",
+      "height": "100px"
+    },
+    domProps: {
+      "value": (_vm.currentOfficial.ACHIEVEMENT_RECORD)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentOfficial.ACHIEVEMENT_RECORD = $event.target.value
+      }
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer",
+    staticStyle: {
+      "border-color": "transparent"
+    }
+  })])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "modal-header"
   }, [_c('button', {
     staticClass: "close",
@@ -48275,135 +48571,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "myModalLabel"
     }
-  }, [_vm._v("Additional Description")])]), _vm._v(" "), _c('div', {
-    staticClass: "modal-body"
-  }, [_c('form', {
-    staticClass: "form-details"
-  }, [_c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("OFFICE ADDRESS")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px"
-    },
-    attrs: {
-      "type": "text"
-    }
-  }), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("CONTACT")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px"
-    },
-    attrs: {
-      "type": "text"
-    }
-  }), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("EMAIL")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px"
-    },
-    attrs: {
-      "type": "text"
-    }
-  }), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("CELLPHONE NUMBER")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px"
-    },
-    attrs: {
-      "type": "text"
-    }
-  }), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("RELIGION")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px"
-    },
-    attrs: {
-      "type": "text"
-    }
-  }), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("BASIS_OF_ASSUMPTION")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px"
-    },
-    attrs: {
-      "type": "text"
-    }
-  }), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("SERVICE RECORD")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px"
-    },
-    attrs: {
-      "type": "text"
-    }
-  }), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("SERVICE RECORD")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px"
-    },
-    attrs: {
-      "type": "text"
-    }
-  }), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("DEDUCATIONAL ATTAINMENT")]), _vm._v(" "), _c('textarea', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px",
-      "height": "100px",
-      "margin-top": "21px"
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5"
-  }, [_c('label', [_vm._v("TRAINING STUDY & SCHOOLARSHIP GRANTS")]), _vm._v(" "), _c('textarea', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px",
-      "height": "100px"
-    }
-  })]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5",
-    staticStyle: {
-      "margin-top": "20px"
-    }
-  }, [_c('label', [_vm._v("MEMBERSHIP_IN_ORGANIZATION")]), _vm._v(" "), _c('textarea', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px",
-      "height": "100px"
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-5",
-    staticStyle: {
-      "margin-top": "20px"
-    }
-  }, [_c('label', [_vm._v("ACHIEVEMENT_RECORD")]), _vm._v(" "), _c('textarea', {
-    staticClass: "form-control",
-    staticStyle: {
-      "width": "300px",
-      "height": "100px"
-    }
-  })])])]), _vm._v(" "), _c('div', {
-    staticClass: "modal-footer",
-    staticStyle: {
-      "border-color": "transparent"
-    }
-  })])])])
+  }, [_vm._v("Additional Description")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -48524,7 +48692,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }), _vm._v(" "), _c('table', {
-    staticClass: "table table-condensed table-striped table-bordered",
+    staticClass: "table table-condensed table-hover table-striped table-bordered",
     attrs: {
       "id": "table-officials"
     }
@@ -48532,11 +48700,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('tr', {
       staticStyle: {
         "cursor": "pointer"
-      },
-      on: {
-        "click": function($event) {
-          _vm.showAdditionalDetials(official)
-        }
       }
     }, [_c('th', {
       staticClass: "text-center"
@@ -48550,7 +48713,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "text-center"
     }, [_vm._v(_vm._s(official.STATUS))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.getBirthDate(official.BIRTH_DATE)))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(official.SEX))])])
+    }, [_vm._v(_vm._s(official.SEX))]), _vm._v(" "), _c('th', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.TERM_OFFICE))]), _vm._v(" "), _c('th', [_c('a', {
+      staticStyle: {
+        "cursor": "pointer"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showAdditionalDetials(official)
+        }
+      }
+    }, [_vm._v("Additional details")])])])
   }))])])]), _vm._v(" "), _c('modal-details', {
     attrs: {
       "current-official": _vm.currentOfficial
@@ -48585,7 +48759,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "lass": "text-center"
     }
-  }, [_vm._v("SEX")])])])
+  }, [_vm._v("SEX")]), _vm._v(" "), _c('th', [_vm._v("TERM OFFICE")]), _vm._v(" "), _c('th', {
+    attrs: {
+      "width": "150"
+    }
+  }, [_vm._v("Additional Description")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
