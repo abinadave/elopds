@@ -18,7 +18,8 @@ Vue.use(VueResource);
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf-token').getAttribute('content');
 
-import OfficialsData from './components/official/officials_data.vue'
+import OfficialsData   from './components/official/officials_data.vue'
+import OfficialsReport from './components/official/official_report.vue'
 
 window.router = new VueRouter({
   routes: [
@@ -26,9 +27,13 @@ window.router = new VueRouter({
       path: '/', 
       redirect: '/officials/data' 
     },
+    { 
+      path: '/officials/data', 
+      component: OfficialsData
+    },
     {
-	    path: '/officials/data',
-	    component: OfficialsData
+	    path: '/officials/report',
+	    component: OfficialsReport
     }
   ]
 });

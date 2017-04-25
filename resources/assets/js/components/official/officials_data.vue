@@ -16,6 +16,9 @@
                              {{ arr.CITYMUN }}
                         </option>
                     </select>
+                    <div class="pull-right">
+                        <label>Officials Length {{ officials.length }}</label>
+                    </div>
                     <input @keyup="changeInKeyword" @keyup.enter="searchQuery" v-model="search" type="text" class="form-control" style="width: 250px; display: inline-block; border-radius: 15px; margin-bottom: 10px" placeholder="Search for local official">
                     <table class="table table-condensed table-hover table-striped table-bordered" id="table-officials">
                         <thead>

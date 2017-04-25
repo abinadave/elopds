@@ -7,6 +7,10 @@ use App\Official as Official;
 use DB;
 class OfficialController extends Controller
 {
+	public function fetchAll(){
+		$resp = Official::all();
+		return response()->json($resp);
+	}
 	public function update(Request $request){
 		$value = $request->input('value');
 		$id = $request->input('id');
@@ -72,14 +76,14 @@ class OfficialController extends Controller
 		if ($search == '') {
 			if ($citymun == '0' && $province != '0') {
 				// province only
-				$resp = Official::where('PROVINCE', $province)->orderBy('LAST_NAME','ASC')->get();
+				$resp = Official::where('PROVINCE', $province)->orderBy('POSITION_NAME','ASC')->get();
 			}elseif($citymun != '0' && $province == '0'){
 				// citymun only
 				$resp = Official::take(100)->get();
 			}elseif($citymun != '0' && $province != '0'){
 				// citymun & province only
 				$resp = Official::where('PROVINCE', $province)
-								->orderBy('LAST_NAME','ASC')->get();
+								->orderBy('POSITION_NAME','ASC')->get();
 			}elseif($citymun == '0' && $province == '0'){
 				$resp = Official::take(100)->get();
 			}
@@ -98,14 +102,14 @@ class OfficialController extends Controller
 		if ($search == '') {
 			if ($citymun == '0' && $province != '0') {
 				// province only
-				$resp = Official::where('PROVINCE', $province)->orderBy('LAST_NAME','ASC')->get();
+				$resp = Official::where('PROVINCE', $province)->orderBy('POSITION_NAME','ASC')->get();
 			}elseif($citymun != '0' && $province == '0'){
 				// citymun only
-				$resp = Official::where('CITYMUN', $citymun)->orderBy('LAST_NAME','ASC')->get();
+				$resp = Official::where('CITYMUN', $citymun)->orderBy('POSITION_NAME','ASC')->get();
 			}elseif($citymun != '0' && $province != '0'){
 				// citymun & province only
 				$resp = Official::where('CITYMUN', $citymun)
-								->orderBy('LAST_NAME','ASC')->get();
+								->orderBy('POSITION_NAME','ASC')->get();
 			}elseif($citymun == '0' && $province == '0'){
 				$resp = Official::take(100)->get();
 			}
@@ -117,7 +121,7 @@ class OfficialController extends Controller
     public function fetch(Request $request){
     	$skip = $request->input('skip');
     	$take = $request->input('take');
-    	$data = Official::take(100)->orderBy('LAST_NAME','ASC')->get();
+    	$data = Official::take(100)->orderBy('POSITION_NAME','ASC')->get();
     	return response()->json($data);
     }
 }

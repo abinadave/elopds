@@ -31,8 +31,11 @@
                     </button>
 
                     <!-- Branding Image -->
+
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                         <img class="pull-left" src="/imgs/dilg.png" style="width: 35px; height: 35px; padding: 5; margin-top: -8px">
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                       {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
@@ -40,6 +43,8 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
+                        <li><router-link to="/officials/report">Reports</router-link></li>
+                        <li><router-link to="/officials/data">Officials Data</router-link></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
