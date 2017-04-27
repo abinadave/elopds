@@ -4,9 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Official as Official;
+use Illuminate\Support\Facades\Storage;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Input;
+
 class OfficialController extends Controller
 {
+	public function importExcel(Request $request)
+	{
+		if(Input::hasFile('import_file')){
+			$path = Input::file('import_file')->getRealPath();
+			$data = Excel::load($path, function($reader) {
+			})->get();
+			if(!empty($data) && $data->count()){
+				// foreach ($data as $key => $value) {
+				// 	$insert[] = ['LAST_NAME' => $value->LAST_NAME, 'description' => $value->description];
+				// }
+				// if(!empty($insert)){
+				// 	DB::table('officials_copy')->insert($insert);
+				// 	dd('Insert Record successfully.');
+				// }
+				// foreach ($data as $key => $value) {
+				// 	print_r($value);
+				// }
+			}
+		}
+		// return back()
+;	}
+	public function importFile(Request $request){
+		if ($request->hasFile('excel_file')) {
+		    $file = $request->file('excel_file');
+		    $filename = $file->getClientOriginalName();
+		    $path = $file->getRealPath();
+		    Storage::putFile('temp', $file);
+		}else {
+			echo "File was not found!";
+		}
+	}
 	public function fetchAll(){
 		$resp = Official::all();
 		return response()->json($resp);

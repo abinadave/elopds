@@ -9,6 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -45,6 +46,7 @@
                         &nbsp;
                         <li><router-link to="/officials/report">Reports</router-link></li>
                         <li><router-link to="/officials/data">Officials Data</router-link></li>
+                        <li><a href="{{ url('/import_officials') }}">Import</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

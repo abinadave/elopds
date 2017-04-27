@@ -24,4 +24,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('search_query_all', 'OfficialController@searchQueryAll');
     Route::put('official', 'OfficialController@update');
     Route::get('fetch_all_officials', 'OfficialController@fetchAll');
+    Route::get('importExport', 'MaatwebsiteDemoController@importExport');
+    Route::post('importExcel', 'OfficialController@importExcel');
+    Route::get('import_officials', 'HomeController@showImportView');
+    Route::post('fileuploader', 'OfficialController@importFile');
 });
+
+Route::post('importExcel', 'OfficialController@importExcel');

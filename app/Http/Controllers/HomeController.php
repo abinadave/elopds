@@ -12,6 +12,9 @@ class HomeController extends Controller
      *
      * @return void
      */
+    public function showImportView(){
+        return view('auth.import');
+    }
     public function __construct()
     {
         $this->middleware('auth');

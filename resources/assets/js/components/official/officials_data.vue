@@ -39,7 +39,7 @@
                             <tr style="cursor: pointer" v-for="official in officials">
                                 <th class="text-center">{{ official.PROVINCE }}</th>
                                 <th class="text-center">{{ official.CITYMUN }}</th>
-                                <th>{{ official.LAST_NAME }}, {{ official.FIRST_NAME }} {{ official.MIDDLE_NAME }}</th>
+                                <th><b>{{ official.LAST_NAME }}</b>, {{ official.FIRST_NAME }} {{ official.MIDDLE_NAME }}</th>
                                 <th class="text-center">{{ official.AFFILIATE }}</th>
                                 <th class="text-center">{{ official.POSITION_NAME }}</th>
                                 <th class="text-center">{{ official.STATUS }}</th>
