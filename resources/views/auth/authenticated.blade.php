@@ -85,7 +85,12 @@
     </div>
 
     <!-- Scripts -->
+    <link rel="stylesheet" type="text/css" href="dt/DataTables-master/media/css/dataTables.bootstrap.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="dt/DataTables-master/media/css/jquery.dataTables.min.css"> -->
+
     <script src="{{ asset('js/app.js') }}"></script>
     
+    <script src="dt/DataTables-master/media/js/jquery.dataTables.min.js"></script>
+    <script src="dt/DataTables-master/media/js/dataTables.bootstrap.min.js"></script>
 </body>
 </html>

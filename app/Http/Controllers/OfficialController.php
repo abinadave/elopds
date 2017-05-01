@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Input;
 
 class OfficialController extends Controller
 {
+	public function fetchByCityMun(Request $request){
+		
+	}
 	public function importExcel(Request $request)
 	{
 		if(Input::hasFile('import_file')){

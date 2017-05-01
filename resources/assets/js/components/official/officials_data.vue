@@ -125,7 +125,10 @@
                 let str = date.split(' ');
                 if (str.length) {
                     let dob = str[0];
-                    return moment(dob).format('MMMM DD, YYYY')
+                    let formatedDate = moment(dob).format('MMMM DD, YYYY');
+                    if (formatedDate !== 'Invalid date') {
+                        return 
+                    }
                 }else {
                     return date;
                 }

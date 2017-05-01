@@ -1,50 +1,54 @@
 <template>
-            <div :class="tabClass">
+            <div class="container">
                 <div class="panel panel-primary">
                     <div class="panel-heading">ELOPDS Report </div>
                     
                     <div class="panel-body">
                         <ul class="nav nav-tabs">
-                          <li class="active"><a @click="tabClass = 'col-md-12'" data-toggle="tab" href="#home">Report by LGU</a></li>
-                          <li><a @click="tabClass = 'col-md-10 col-md-offset-0'" data-toggle="tab" href="#menu1">Completed</a></li>
+                          <li class="active"><a  data-toggle="tab" href="#home">Report by LGU</a></li>
+                          <li><a  data-toggle="tab" href="#menu1">Completed</a></li>
                           <li><a data-toggle="tab" href="#menu2">No Reports</a></li>
                         </ul>
 
                         <div class="tab-content">
                           <div id="home" class="tab-pane fade in active">
-                            <label style="padding: 10px">Select CITY/MUN
+
+                            <!-- <label style="padding: 10px">Select CITY/MUN
                                 <select  class="form-control" v-model="citymun">
                                     <option :value="0">All</option>
                                     <option v-for="city in citymuns">
                                         {{ city.CITYMUN }}
                                     </option>
                                 </select>
-                            </label>
-                            <table class="table table-hover table-condensed table-striped">
+                            </label> -->
+                            <table id="table-reports" class="table table-hover table-condensed table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>CITY/MUNICIPALITY</th>
-                                        <th>OFFICIALS</th>
-                                        <th>PERCENTAGE</th>
-                                        <!-- <th>SUMMARY</th> -->
+                                        <th style="text-align: center">OFFICIALS</th>
+                                        <th style="text-align: center">PERCENTAGE</th>
+                                        <th class="text-center">DRAFTED</th>
+                                        <th class="text-center">APPROVED</th>
                                         <th>View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="lgu in citymuns" v-show="lgu.CITYMUN !== '' && citymun == 0">
                                         <td>{{ lgu.CITYMUN }}</td>
-                                        <td><b>{{ getOfficialCount(lgu) }}</b> / 12</td>
-                                        <td><b>{{ getPercentage(lgu) }}</b></td> 
-                                        <!-- <td>{{ getSumary(lgu) }}</td> -->
+                                        <td style="text-align: center"><b>{{ getOfficialCount(lgu) }}</b> / 12</td>
+                                        <td style="text-align: center"><b>{{ getPercentage(lgu) }}</b></td> 
+                                        <td style="text-align: center">{{ getTotalDrafted(lgu) }}</td>
+                                        <td style="text-align: center">{{ getTotalApproved(lgu) }}</td>
                                         <td><i style="cursor:pointer" @click="showInvolvedPerson(lgu)" class="fa fa-folder-open"></i></td>
                                     </tr>
-                                    <tr v-for="lgu in citymuns" v-show="getOfficialCount(lgu) > 0 && citymun !== 0">
+                                    <!-- <tr v-for="lgu in citymuns" v-show="getOfficialCount(lgu) > 0 && citymun !== 0">
                                         <td>{{ lgu.CITYMUN }}</td>
                                         <td><b>{{ getOfficialCount(lgu) }}</b> / 12</td>
                                         <td><b>{{ getPercentage(lgu) }}</b></td> 
-                                        <!-- <td>{{ getSumary(lgu) }}</td> -->
+                                        <td style="text-align: center">{{ getTotalDrafted(lgu) }}</td>
+                                        <td style="text-align: center">{{ getTotalApproved(lgu) }}</td>
                                         <td><i style="cursor:pointer" @click="showInvolvedPerson(lgu)" class="fa fa-folder-open"></i></td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                           </div>
@@ -68,11 +72,14 @@
     import accounting from 'accounting'
     import CompModalOfficials from './modal_show_officials.vue'
     import CompCompletedReport from './completed/completed_inputs.vue'
+    // import dt from 'datatables.net'
+
     export default {
         mounted() {
+            let self = this;
             console.log('Component mounted.');
-            this.fetchOfficials();
-            this.fetchCityMuns();
+            self.fetchOfficials();
+            self.fetchCityMuns();
         },
         components: {
             'modal-involved-officials': CompModalOfficials,
@@ -80,14 +87,32 @@
         },
         data(){
             return {
+                search: '',
                 officials: [],
                 citymuns: [],citymun: 0,
                 shouldBeTheLength: 12,
                 modalOfficials: [],
-                tabClass: 'col-md-12'
+                tabClass: 'col-md-12',
+                citymunScrolling: {
+                    skip: 0, take: 20
+                }
             }
         },
         methods: {
+            getTotalApproved(lgu){
+                let self = this;
+                let length = _.filter(self.officials, {CITYMUN: lgu.CITYMUN, STATUS: 'approved'}).length;
+                if (length > 0) {
+                    return length;
+                }
+            },
+            getTotalDrafted(lgu){
+                let self = this;
+                let length = _.filter(self.officials, {CITYMUN: lgu.CITYMUN, STATUS: 'draft'}).length;
+                if (length > 0) {
+                    return length;
+                }
+            },
             getSumary(lgu){
                 let self = this;
                 let rsOfficials = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
@@ -106,10 +131,11 @@
             },
             showInvolvedPerson(lgu){
                 let self = this;
-                let rs = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
-                let sortedArr = _.sortBy(rs, [function(o) { return o.LAST_NAME; }]);
-                self.modalOfficials = sortedArr;
-                $('#modalOfficials').modal('show');
+                setTimeout(function(){
+                    let rs = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
+                    let sortedArr = _.sortBy(rs, [function(o) { return o.LAST_NAME; }]);
+                    self.modalOfficials = sortedArr;
+                }, 300);                
             },
             getPercentage(lgu){
                 let self = this;
@@ -120,8 +146,12 @@
             getOfficialCount(lgu){
                 let self = this;
                 let rs = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
-                // console.log(rs.length)
                 return rs.length;
+            },
+            initDataTables(){
+                setTimeout(function(){
+                    $('#table-reports').DataTable();
+                }, 2000)
             },
             fetchOfficials(){
                 let self = this;
@@ -129,6 +159,7 @@
                     if (resp.status === 200) {
                         let json = resp.body;
                         self.officials = json;
+                        self.initDataTables();
                     }
                 }, (resp) => {
                     if (resp.status === 422) {

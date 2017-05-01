@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('importExcel', 'OfficialController@importExcel');
     Route::get('import_officials', 'HomeController@showImportView');
     Route::post('fileuploader', 'OfficialController@importFile');
+    Route::post('get_officials_by_citymun', 'OfficialController@fetchByCityMun');
 });
 
 Route::post('importExcel', 'OfficialController@importExcel');
