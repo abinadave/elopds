@@ -1,26 +1,17 @@
 <template>
-            <div class="container">
+            <div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">ELOPDS Report </div>
                     
                     <div class="panel-body">
                         <ul class="nav nav-tabs">
                           <li class="active"><a  data-toggle="tab" href="#home">Report by LGU</a></li>
-                          <li><a  data-toggle="tab" href="#menu1">Completed</a></li>
-                          <li><a data-toggle="tab" href="#menu2">No Reports</a></li>
+                          <!-- <li><a  data-toggle="tab" href="#menu1">Completed</a></li> -->
+                          <!-- <li><a data-toggle="tab" href="#menu2">No Reports</a></li> -->
                         </ul>
 
                         <div class="tab-content">
                           <div id="home" class="tab-pane fade in active">
-
-                            <!-- <label style="padding: 10px">Select CITY/MUN
-                                <select  class="form-control" v-model="citymun">
-                                    <option :value="0">All</option>
-                                    <option v-for="city in citymuns">
-                                        {{ city.CITYMUN }}
-                                    </option>
-                                </select>
-                            </label> -->
                             <table id="table-reports" class="table table-hover table-condensed table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -41,14 +32,6 @@
                                         <td style="text-align: center">{{ getTotalApproved(lgu) }}</td>
                                         <td><i style="cursor:pointer" @click="showInvolvedPerson(lgu)" class="fa fa-folder-open"></i></td>
                                     </tr>
-                                    <!-- <tr v-for="lgu in citymuns" v-show="getOfficialCount(lgu) > 0 && citymun !== 0">
-                                        <td>{{ lgu.CITYMUN }}</td>
-                                        <td><b>{{ getOfficialCount(lgu) }}</b> / 12</td>
-                                        <td><b>{{ getPercentage(lgu) }}</b></td> 
-                                        <td style="text-align: center">{{ getTotalDrafted(lgu) }}</td>
-                                        <td style="text-align: center">{{ getTotalApproved(lgu) }}</td>
-                                        <td><i style="cursor:pointer" @click="showInvolvedPerson(lgu)" class="fa fa-folder-open"></i></td>
-                                    </tr> -->
                                 </tbody>
                             </table>
                           </div>
@@ -67,17 +50,18 @@
             </div>
         
 </template>
-
+<style type="text/css">
+    #table-reports {
+        font-size: 12px;
+    }
+</style>
 <script>
     import accounting from 'accounting'
     import CompModalOfficials from './modal_show_officials.vue'
     import CompCompletedReport from './completed/completed_inputs.vue'
-    // import dt from 'datatables.net'
-
     export default {
         mounted() {
             let self = this;
-            console.log('Component mounted.');
             self.fetchOfficials();
             self.fetchCityMuns();
         },
@@ -95,7 +79,8 @@
                 tabClass: 'col-md-12',
                 citymunScrolling: {
                     skip: 0, take: 20
-                }
+                },
+                currentLgu: { name: '' }
             }
         },
         methods: {
@@ -131,11 +116,19 @@
             },
             showInvolvedPerson(lgu){
                 let self = this;
-                setTimeout(function(){
-                    let rs = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
-                    let sortedArr = _.sortBy(rs, [function(o) { return o.LAST_NAME; }]);
-                    self.modalOfficials = sortedArr;
-                }, 300);                
+                $('#modal-current-officials').modal('show');
+                self.$http.post('/get_officials_by_citymun',{
+                    lgu: lgu.CITYMUN
+                }).then((resp) => {
+                    if (resp.status === 200) {
+                        let json = resp.body;
+                        for (var i = json.length - 1; i >= 0; i--) {
+                            self.modalOfficials.push(json[i]);
+                        }
+                    }
+                }, (resp) => {
+                    console.log(resp);
+                })           
             },
             getPercentage(lgu){
                 let self = this;

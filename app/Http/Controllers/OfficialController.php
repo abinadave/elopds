@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Input;
 class OfficialController extends Controller
 {
 	public function fetchByCityMun(Request $request){
-		
+		$resp = Official::where('CITYMUN', $request->input('lgu'))->orderBy('POSITION_NAME','asc')->get();
+		return response()->json($resp);
 	}
 	public function importExcel(Request $request)
 	{

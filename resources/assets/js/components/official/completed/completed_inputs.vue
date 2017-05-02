@@ -11,15 +11,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr @mouseenter="showOfficials(lgu)" v-for="lgu in completedLgus" v-show="lgu.CITYMUN !== ''">
-                        <td>{{ lgu.CITYMUN }}</td>
+                    <tr style="cursor: pointer" @click="showOfficials(lgu)" v-for="lgu in completedLgus" v-show="lgu.CITYMUN !== ''">
+                        <td class="text-primary">{{ lgu.CITYMUN }}</td>
                         <td style="text-align: center">{{ getOfficialCount(lgu) }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="col-md-9" style="overflow: auto; height: 500px">
-            <table id="tbl-completed" class="tabel table-condensed table-bordered table-hover">
+            <table style="width: 1000px" id="tbl-completed" class="tabel table-condensed table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>PROVINCE</th>
@@ -42,7 +42,7 @@
 </template>
 <style type="text/css">
     #tbl-completed {
-        font-size: 13px;
+        font-size: 12px;
     }
 </style>
 <script>
@@ -90,7 +90,8 @@
                 let rsOfficials = []
                 let completedLgus = self.citymuns.filter(function(lgu) {
                     rsOfficials = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
-                    return rsOfficials.length >= 12;
+                    // return rsOfficials.length >= 12;
+                    console.log(rsOfficials.length)
                 });
                 self.completedLgus = completedLgus;
             }
