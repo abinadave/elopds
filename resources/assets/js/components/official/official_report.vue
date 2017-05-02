@@ -2,14 +2,12 @@
             <div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">ELOPDS Report </div>
-                    
                     <div class="panel-body">
                         <ul class="nav nav-tabs">
                           <li class="active"><a  data-toggle="tab" href="#home">Report by LGU</a></li>
-                          <!-- <li><a  data-toggle="tab" href="#menu1">Completed</a></li> -->
+                          <li><a  data-toggle="tab" href="#menu1">Completed</a></li>
                           <!-- <li><a data-toggle="tab" href="#menu2">No Reports</a></li> -->
                         </ul>
-
                         <div class="tab-content">
                           <div id="home" class="tab-pane fade in active">
                             <table id="table-reports" class="table table-hover table-condensed table-striped table-bordered">
@@ -28,7 +26,7 @@
                                     <tr v-for="lgu in citymuns" v-show="lgu.CITYMUN !== '' && citymun == 0">
                                         <td>{{ getProvince(lgu) }}</td>
                                         <td>{{ lgu.CITYMUN }}</td>
-                                        <td style="text-align: center"><b>{{ getOfficialCount(lgu) }}</b> / 12</td>
+                                        <td style="text-align: center"><b>{{ getOfficialCount(lgu) }}</b> / 10</td>
                                         <td style="text-align: center"><b>{{ getPercentage(lgu) }}</b></td> 
                                         <td style="text-align: center">{{ getTotalDrafted(lgu) }}</td>
                                         <td style="text-align: center">{{ getTotalApproved(lgu) }}</td>
@@ -38,7 +36,7 @@
                             </table>
                           </div>
                           <div id="menu1" class="tab-pane fade">
-                              <completed-report :citymuns="citymuns" :officials="officials" ></completed-report>
+                              <completed-report @completedlguslength="notifCompletedLgus" :citymuns="citymuns" :officials="officials" ></completed-report>
                           </div>
                           <div id="menu2" class="tab-pane fade">
                               <h3>Menu 2</h3>
@@ -50,7 +48,6 @@
                 </div>
                 <modal-involved-officials :modal-officials="modalOfficials"></modal-involved-officials>
             </div>
-        
 </template>
 <style type="text/css">
     #table-reports {
@@ -86,6 +83,10 @@
             }
         },
         methods: {
+            notifCompletedLgus(json){
+                let self = this;
+                console.log(json);
+            },
             getProvince(lgu){
                 let self = this;
                 if (lgu.CITYMUN !== '' && lgu.CITYMUN.length > 0) {
@@ -145,7 +146,7 @@
             getPercentage(lgu){
                 let self = this;
                 let rs = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
-                let percentage = (rs.length / 12) * 100;
+                let percentage = (rs.length / 10) * 100;
                 return accounting.formatMoney(percentage,' ', 1) + ' %';
             },
             getOfficialCount(lgu){

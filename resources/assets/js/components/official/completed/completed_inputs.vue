@@ -82,16 +82,14 @@
                 rs = _.uniqBy(rs, function (e) {
                     return e.LAST_NAME && e.FIRST_NAME && e.MIDDLE_NAME;
                 });
-                // console.log(rs.length)
                 return rs.length;
             },
             getCompleted(){
                 let self = this;
                 let rsOfficials = []
                 let completedLgus = self.citymuns.filter(function(lgu) {
-                    rsOfficials = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
-                    // return rsOfficials.length >= 12;
-                    // console.log(rsOfficials.length)
+                    rsOfficials = _.filter(self.officials, {CITYMUN: lgu.CITYMUN, STATUS: 'approved'});
+                    return rsOfficials.length >= 12;
                 });
                 self.completedLgus = completedLgus;
             }
@@ -102,6 +100,11 @@
                 setTimeout(function(){
                     self.getCompleted();
                 }, self.initialDelay);
+            },
+            'completedLgus': function(newVal){
+                let self = this;
+                // alert(newVal.length);
+                self.$emit('completedlguslength', newVal.length);
             }
         }
     }

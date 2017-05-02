@@ -28709,16 +28709,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             rs = _.uniqBy(rs, function (e) {
                 return e.LAST_NAME && e.FIRST_NAME && e.MIDDLE_NAME;
             });
-            // console.log(rs.length)
             return rs.length;
         },
         getCompleted: function getCompleted() {
             var self = this;
             var rsOfficials = [];
             var completedLgus = self.citymuns.filter(function (lgu) {
-                rsOfficials = _.filter(self.officials, { CITYMUN: lgu.CITYMUN });
-                // return rsOfficials.length >= 12;
-                // console.log(rsOfficials.length)
+                rsOfficials = _.filter(self.officials, { CITYMUN: lgu.CITYMUN, STATUS: 'approved' });
+                return rsOfficials.length >= 12;
             });
             self.completedLgus = completedLgus;
         }
@@ -28729,6 +28727,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             setTimeout(function () {
                 self.getCompleted();
             }, self.initialDelay);
+        },
+        'completedLgus': function completedLgus(newVal) {
+            var self = this;
+            // alert(newVal.length);
+            self.$emit('completedlguslength', newVal.length);
         }
     }
 });
@@ -28923,9 +28926,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
-//
-//
-//
 
 
 
@@ -28957,6 +28957,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
     methods: {
+        notifCompletedLgus: function notifCompletedLgus(json) {
+            var self = this;
+            console.log(json);
+        },
         getProvince: function getProvince(lgu) {
             var self = this;
             if (lgu.CITYMUN !== '' && lgu.CITYMUN.length > 0) {
@@ -29014,7 +29018,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         getPercentage: function getPercentage(lgu) {
             var self = this;
             var rs = _.filter(self.officials, { CITYMUN: lgu.CITYMUN });
-            var percentage = rs.length / 12 * 100;
+            var percentage = rs.length / 10 * 100;
             return __WEBPACK_IMPORTED_MODULE_0_accounting___default.a.formatMoney(percentage, ' ', 1) + ' %';
         },
         getOfficialCount: function getOfficialCount(lgu) {
@@ -50212,7 +50216,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticStyle: {
         "text-align": "center"
       }
-    }, [_c('b', [_vm._v(_vm._s(_vm.getOfficialCount(lgu)))]), _vm._v(" / 12")]), _vm._v(" "), _c('td', {
+    }, [_c('b', [_vm._v(_vm._s(_vm.getOfficialCount(lgu)))]), _vm._v(" / 10")]), _vm._v(" "), _c('td', {
       staticStyle: {
         "text-align": "center"
       }
@@ -50244,6 +50248,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "citymuns": _vm.citymuns,
       "officials": _vm.officials
+    },
+    on: {
+      "completedlguslength": _vm.notifCompletedLgus
     }
   })], 1), _vm._v(" "), _vm._m(2)])])]), _vm._v(" "), _c('modal-involved-officials', {
     attrs: {
@@ -50260,7 +50267,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data-toggle": "tab",
       "href": "#home"
     }
-  }, [_vm._v("Report by LGU")])])])
+  }, [_vm._v("Report by LGU")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#menu1"
+    }
+  }, [_vm._v("Completed")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("PROVINCE")]), _vm._v(" "), _c('th', [_vm._v("CITY/MUNICIPALITY")]), _vm._v(" "), _c('th', {
     staticStyle: {
