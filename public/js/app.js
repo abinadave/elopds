@@ -28840,6 +28840,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -28868,8 +28872,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modal_show_officials_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modal_show_officials_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__completed_completed_inputs_vue__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__completed_completed_inputs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__completed_completed_inputs_vue__);
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 //
 //
 //
@@ -28935,6 +28937,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var self = this;
         self.fetchOfficials();
         self.fetchCityMuns();
+        self.fetchprovinces();
     },
 
     components: {
@@ -28946,6 +28949,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             search: '',
             officials: [],
             citymuns: [], citymun: 0,
+            provinces: [],
+            lgus: [],
             shouldBeTheLength: 12,
             modalOfficials: [],
             tabClass: 'col-md-12',
@@ -28957,32 +28962,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
     methods: {
+        fetchprovinces: function fetchprovinces() {
+            var self = this;
+            self.$http.get('/province').then(function (resp) {
+                if (resp.status === 200) {
+                    var json = resp.body;
+                    for (var i = json.length - 1; i >= 0; i--) {
+                        self.provinces.push(json[i]);
+                    }
+                }
+            }, function (resp) {
+                console.log(resp);
+            });
+        },
         notifCompletedLgus: function notifCompletedLgus(json) {
             var self = this;
             console.log(json);
         },
         getProvince: function getProvince(lgu) {
             var self = this;
-            if (lgu.CITYMUN !== '' && lgu.CITYMUN.length > 0) {
-                var rs = _.filter(self.officials, { CITYMUN: lgu.CITYMUN });
-                var first = _.first(rs);
-                if ((typeof first === 'undefined' ? 'undefined' : _typeof(first)) === 'object') {
-                    return first.PROVINCE;
-                }
-            }
-        },
-        getTotalApproved: function getTotalApproved(lgu) {
-            var self = this;
-            var length = _.filter(self.officials, { CITYMUN: lgu.CITYMUN, STATUS: 'approved' }).length;
-            if (length > 0) {
-                return length;
-            }
-        },
-        getTotalDrafted: function getTotalDrafted(lgu) {
-            var self = this;
-            var length = _.filter(self.officials, { CITYMUN: lgu.CITYMUN, STATUS: 'draft' }).length;
-            if (length > 0) {
-                return length;
+            var rs = _.filter(self.provinces, { id: lgu.province_id });
+            if (rs.length) {
+                return rs[0].name.toUpperCase();
             }
         },
         getSumary: function getSumary(lgu) {
@@ -29001,12 +29002,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         },
         showInvolvedPerson: function showInvolvedPerson(lgu) {
             var self = this;
+            self.modalOfficials = [];
             $('#modal-current-officials').modal('show');
+            var rsProvince = _.filter(self.provinces, { id: lgu.province_id });
             self.$http.post('/get_officials_by_citymun', {
-                lgu: lgu.CITYMUN
+                lgu: lgu,
+                province: rsProvince[0]
             }).then(function (resp) {
                 if (resp.status === 200) {
                     var json = resp.body;
+                    json = _.uniqBy(json, function (e) {
+                        return e.LAST_NAME && e.FIRST_NAME;
+                    });
                     for (var i = json.length - 1; i >= 0; i--) {
                         self.modalOfficials.push(json[i]);
                     }
@@ -29015,20 +29022,93 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 console.log(resp);
             });
         },
+        removeDuplicates: function removeDuplicates(rs) {
+            var self = this;
+            return _.uniqBy(rs, function (e) {
+                return e.LAST_NAME && e.FIRST_NAME;
+            });
+        },
+        getTotalApproved: function getTotalApproved(lgu) {
+            var self = this;
+            var rsProvince = _.filter(self.provinces, { id: lgu.province_id });
+            if (rsProvince.length) {
+                var province = _.first(rsProvince);
+                var rs = self.officials.filter(function (official) {
+                    return official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase() && official.CITYMUN.trim().toUpperCase() === lgu.name.trim().toUpperCase();
+                });
+                rs = self.removeDuplicates(rs);
+                return _.filter(rs, { STATUS: 'approved' }).length;
+            }
+        },
+        getTotalDrafted: function getTotalDrafted(lgu) {
+            var self = this;
+            var rsProvince = _.filter(self.provinces, { id: lgu.province_id });
+            if (rsProvince.length) {
+                var province = _.first(rsProvince);
+                var rs = self.officials.filter(function (official) {
+                    return official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase() && official.CITYMUN.trim().toUpperCase() === lgu.name.trim().toUpperCase();
+                });
+                rs = self.removeDuplicates(rs);
+                var rsDrafted = _.filter(rs, { STATUS: 'draft' });
+                if (rsDrafted.length > 0) {
+                    return rsDrafted.length;
+                }
+            }
+        },
         getPercentage: function getPercentage(lgu) {
             var self = this;
-            var rs = _.filter(self.officials, { CITYMUN: lgu.CITYMUN });
-            var percentage = rs.length / 10 * 100;
-            return __WEBPACK_IMPORTED_MODULE_0_accounting___default.a.formatMoney(percentage, ' ', 1) + ' %';
+            var rsProvince = _.filter(self.provinces, { id: lgu.province_id });
+            if (rsProvince.length) {
+                var province = _.first(rsProvince);
+                var rs = self.officials.filter(function (official) {
+                    return official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase() && official.CITYMUN.trim().toUpperCase() === lgu.name.trim().toUpperCase() && official.STATUS === 'approved';
+                });
+                rs = self.removeDuplicates(rs);
+                var city = self.analyzeIfCityOrNot(lgu.name);
+                if (city == ' 12') {
+                    var percentage = rs.length / 12 * 100;
+                    if (percentage >= 101) {
+                        return 100;
+                    } else {
+                        return percentage;
+                    }
+                } else {
+                    var _percentage = rs.length / 10 * 100;
+                    if (_percentage >= 101) {
+                        return 100;
+                    } else {
+                        return _percentage;
+                    }
+                }
+            }
         },
-        getOfficialCount: function getOfficialCount(lgu) {
+        getTotalOfficials: function getTotalOfficials(lgu) {
             var self = this;
-            var rs = _.filter(self.officials, { CITYMUN: lgu.CITYMUN });
-            return rs.length;
+            var rsProvince = _.filter(self.provinces, { id: lgu.province_id });
+            if (rsProvince.length) {
+                var province = _.first(rsProvince);
+                var rs = self.officials.filter(function (official) {
+                    return official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase() && official.CITYMUN.trim().toUpperCase() === lgu.name.trim().toUpperCase();
+                });
+                rs = self.removeDuplicates(rs);
+                return rs.length + ' / ' + self.analyzeIfCityOrNot(lgu.name);
+            }
+        },
+        analyzeIfCityOrNot: function analyzeIfCityOrNot(city) {
+            var self = this;
+            var str = '';
+            str = city.toLowerCase();
+            if (str.search('city') != -1) {
+                return ' 12';
+            } else {
+                return ' 10';
+            }
         },
         initDataTables: function initDataTables() {
             setTimeout(function () {
-                $('#table-reports').DataTable();
+                $('#table-reports').DataTable({
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
+                });
             }, 2000);
         },
         fetchOfficials: function fetchOfficials() {
@@ -29036,7 +29116,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             self.$http.get('/fetch_all_officials').then(function (resp) {
                 if (resp.status === 200) {
                     var json = resp.body;
-                    self.officials = json;
+                    for (var i = json.length - 1; i >= 0; i--) {
+                        self.officials.push(json[i]);
+                    }
                     self.initDataTables();
                 }
             }, function (resp) {
@@ -29050,7 +29132,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             self.$http.get('/citymun').then(function (resp) {
                 if (resp.status === 200) {
                     var json = resp.body;
-                    self.citymuns = json;
+                    for (var i = json.length - 1; i >= 0; i--) {
+                        self.citymuns.push(json[i]);
+                    }
                 }
             }, function (resp) {
                 if (resp.status === 422) {
@@ -29086,21 +29170,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 self.searchQueryCitYMun();
             }
         },
-        'officials': function officials() {
-            $(function () {
-                var currentClass = '';
-                var loading = 'fa fa-spinner fa-pulse fa-fw';
-                var folder = 'fa fa-folder-open';
-                // $('td i').click(function(event) {
-                //     if ($(this).hasClass('fa-folder-open')) {
-                //         $(this).removeClass();
-                //         $(this).addClass(loading);
-                //     }else {
-                //         $(this).removeClass();
-                //         $(this).addClass(folder);
-                //     }
-                // });
-            });
+        'officials': function officials(newOfficials) {
+            var self = this;
+            // newOfficials.forEach(function(model){
+            //    if (model.PROVINCE === 'LEYTE') {
+            //        if (model.CITYMUN.trim() === 'SAN ISIDRO') {
+            //            // console.log('san isidro')
+            //        }
+            //    }
+            // })
         }
     }
 });
@@ -31832,7 +31910,7 @@ exports.push([module.i, "\n.form-details input {\n    padding: 2px;\n    width: 
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
-exports.push([module.i, "\n#table-show-officials {\n  font-size: 12px;\n  padding: 2px;\n}\n", ""]);
+exports.push([module.i, "\n#table-show-officials {\n  font-size: 11px;\n  padding: 2px;\n}\n", ""]);
 
 /***/ }),
 /* 163 */
@@ -49904,7 +49982,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "modal-dialog",
     staticStyle: {
-      "width": "60%"
+      "width": "80%"
     },
     attrs: {
       "role": "document"
@@ -49930,6 +50008,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.modalOfficials), function(official) {
     return _c('tr', [_c('td', {
       staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.PROVINCE))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.CITYMUN))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
     }, [_vm._v(_vm._s(official.POSITION_NAME))]), _vm._v(" "), _c('td', [_c('b', [_vm._v(_vm._s(official.LAST_NAME))]), _vm._v(", " + _vm._s(official.FIRST_NAME) + " " + _vm._s(official.MIDDLE_NAME))]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(official.STATUS))]), _vm._v(" "), _c('td', {
@@ -49951,6 +50033,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("×")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("PROVINCE")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("LGU")]), _vm._v(" "), _c('th', {
     staticClass: "text-center",
     staticStyle: {
       "width": "400px"
@@ -50205,31 +50291,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "table-reports"
     }
   }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.citymuns), function(lgu) {
-    return _c('tr', {
-      directives: [{
-        name: "show",
-        rawName: "v-show",
-        value: (lgu.CITYMUN !== '' && _vm.citymun == 0),
-        expression: "lgu.CITYMUN !== '' && citymun == 0"
-      }]
-    }, [_c('td', [_vm._v(_vm._s(_vm.getProvince(lgu)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(lgu.CITYMUN))]), _vm._v(" "), _c('td', {
-      staticStyle: {
-        "text-align": "center"
-      }
-    }, [_c('b', [_vm._v(_vm._s(_vm.getOfficialCount(lgu)))]), _vm._v(" / 10")]), _vm._v(" "), _c('td', {
-      staticStyle: {
-        "text-align": "center"
-      }
-    }, [_c('b', [_vm._v(_vm._s(_vm.getPercentage(lgu)))])]), _vm._v(" "), _c('td', {
-      staticStyle: {
-        "text-align": "center"
-      }
+    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.getProvince(lgu)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(lgu.name.toUpperCase()))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
     }, [_vm._v(_vm._s(_vm.getTotalDrafted(lgu)))]), _vm._v(" "), _c('td', {
-      staticStyle: {
-        "text-align": "center"
-      }
-    }, [_vm._v(_vm._s(_vm.getTotalApproved(lgu)))]), _vm._v(" "), _c('td', [_c('i', {
-      staticClass: "fa fa-folder-open",
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(_vm.getTotalApproved(lgu)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.getPercentage(lgu)) + " %")]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(_vm.getTotalOfficials(lgu)))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_c('i', {
+      staticClass: "fa fa-folder-open text-info",
       staticStyle: {
         "cursor": "pointer"
       },
@@ -50275,18 +50346,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Completed")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("PROVINCE")]), _vm._v(" "), _c('th', [_vm._v("CITY/MUNICIPALITY")]), _vm._v(" "), _c('th', {
-    staticStyle: {
-      "text-align": "center"
+    staticClass: "text-center"
+  }, [_vm._v("DRAFT")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("APPROVED")]), _vm._v(" "), _c('td', {
+    staticClass: "text-center"
+  }, [_vm._v("PERCENTAGE")]), _vm._v(" "), _c('td', {
+    attrs: {
+      "width": "10"
     }
   }, [_vm._v("OFFICIALS")]), _vm._v(" "), _c('th', {
-    staticStyle: {
-      "text-align": "center"
+    attrs: {
+      "width": "10"
     }
-  }, [_vm._v("PERCENTAGE")]), _vm._v(" "), _c('th', {
-    staticClass: "text-center"
-  }, [_vm._v("DRAFTED")]), _vm._v(" "), _c('th', {
-    staticClass: "text-center"
-  }, [_vm._v("APPROVED")]), _vm._v(" "), _c('th', [_vm._v("View")])])])
+  }, [_vm._v("View")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "tab-pane fade",

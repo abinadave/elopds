@@ -15,22 +15,22 @@
                                     <tr>
                                         <th>PROVINCE</th>
                                         <th>CITY/MUNICIPALITY</th>
-                                        <th style="text-align: center">OFFICIALS</th>
-                                        <th style="text-align: center">PERCENTAGE</th>
-                                        <th class="text-center">DRAFTED</th>
+                                        <th class="text-center">DRAFT</th>
                                         <th class="text-center">APPROVED</th>
-                                        <th>View</th>
+                                        <td class="text-center">PERCENTAGE</td>
+                                        <td width="10">OFFICIALS</td>
+                                        <th width="10">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="lgu in citymuns" v-show="lgu.CITYMUN !== '' && citymun == 0">
+                                    <tr v-for="lgu in citymuns">
                                         <td>{{ getProvince(lgu) }}</td>
-                                        <td>{{ lgu.CITYMUN }}</td>
-                                        <td style="text-align: center"><b>{{ getOfficialCount(lgu) }}</b> / 10</td>
-                                        <td style="text-align: center"><b>{{ getPercentage(lgu) }}</b></td> 
-                                        <td style="text-align: center">{{ getTotalDrafted(lgu) }}</td>
-                                        <td style="text-align: center">{{ getTotalApproved(lgu) }}</td>
-                                        <td><i style="cursor:pointer" @click="showInvolvedPerson(lgu)" class="fa fa-folder-open"></i></td>
+                                        <td>{{ lgu.name.toUpperCase() }}</td>
+                                        <td class="text-center">{{ getTotalDrafted(lgu) }}</td>
+                                        <td class="text-center">{{ getTotalApproved(lgu) }}</td>
+                                        <td>{{ getPercentage(lgu) }} %</td>
+                                        <td class="text-center">{{ getTotalOfficials(lgu) }}</td>
+                                        <td class="text-center"><i style="cursor:pointer" @click="showInvolvedPerson(lgu)" class="fa fa-folder-open text-info"></i></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -63,6 +63,7 @@
             let self = this;
             self.fetchOfficials();
             self.fetchCityMuns();
+            self.fetchprovinces();
         },
         components: {
             'modal-involved-officials': CompModalOfficials,
@@ -73,6 +74,8 @@
                 search: '',
                 officials: [],
                 citymuns: [],citymun: 0,
+                provinces: [],
+                lgus: [],
                 shouldBeTheLength: 12,
                 modalOfficials: [],
                 tabClass: 'col-md-12',
@@ -83,34 +86,31 @@
             }
         },
         methods: {
+            fetchprovinces(){
+                let self = this;
+                self.$http.get('/province').then((resp) => {
+                    if (resp.status === 200) {
+                        let json = resp.body;
+                        for (var i = json.length - 1; i >= 0; i--) {
+                            self.provinces.push(json[i]);
+                        }
+                    }
+                }, (resp) => {
+                    console.log(resp);
+                });
+            },
             notifCompletedLgus(json){
                 let self = this;
                 console.log(json);
             },
             getProvince(lgu){
                 let self = this;
-                if (lgu.CITYMUN !== '' && lgu.CITYMUN.length > 0) {
-                    let rs= _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
-                    let first = _.first(rs);
-                    if (typeof first === 'object') {
-                        return first.PROVINCE;
-                    }
+                let rs = _.filter(self.provinces, { id: lgu.province_id});
+                if (rs.length) {
+                    return rs[0].name.toUpperCase();
                 }
             },
-            getTotalApproved(lgu){
-                let self = this;
-                let length = _.filter(self.officials, {CITYMUN: lgu.CITYMUN, STATUS: 'approved'}).length;
-                if (length > 0) {
-                    return length;
-                }
-            },
-            getTotalDrafted(lgu){
-                let self = this;
-                let length = _.filter(self.officials, {CITYMUN: lgu.CITYMUN, STATUS: 'draft'}).length;
-                if (length > 0) {
-                    return length;
-                }
-            },
+            
             getSumary(lgu){
                 let self = this;
                 let rsOfficials = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
@@ -129,42 +129,131 @@
             },
             showInvolvedPerson(lgu){
                 let self = this;
+                self.modalOfficials = [];
                 $('#modal-current-officials').modal('show');
+                let rsProvince = _.filter(self.provinces, {id: lgu.province_id});
                 self.$http.post('/get_officials_by_citymun',{
-                    lgu: lgu.CITYMUN
+                    lgu: lgu,
+                    province: rsProvince[0]
                 }).then((resp) => {
                     if (resp.status === 200) {
                         let json = resp.body;
+                        json = _.uniqBy(json, function (e) {
+                            return e.LAST_NAME && e.FIRST_NAME;
+                        });
                         for (var i = json.length - 1; i >= 0; i--) {
                             self.modalOfficials.push(json[i]);
                         }
                     }
                 }, (resp) => {
                     console.log(resp);
-                })           
+                });           
+            },
+            
+            removeDuplicates(rs){
+                let self = this;
+                return _.uniqBy(rs, function (e) {
+                  return e.LAST_NAME && e.FIRST_NAME;
+                });
+            },
+            getTotalApproved(lgu){
+                let self = this;
+                let rsProvince = _.filter(self.provinces, {id: lgu.province_id});
+                if (rsProvince.length) {
+                    let province = _.first(rsProvince);
+                    let rs = self.officials.filter(function(official){
+                        return official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase() &&
+                               official.CITYMUN.trim().toUpperCase()  === lgu.name.trim().toUpperCase();
+                    });
+                    rs = self.removeDuplicates(rs);
+                    return _.filter(rs, {STATUS: 'approved'}).length;
+                }
+            },
+            
+            getTotalDrafted(lgu){
+                let self = this;
+                let rsProvince = _.filter(self.provinces, {id: lgu.province_id});
+                if (rsProvince.length) {
+                    let province = _.first(rsProvince);
+                    let rs = self.officials.filter(function(official){
+                        return official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase() &&
+                               official.CITYMUN.trim().toUpperCase()  === lgu.name.trim().toUpperCase();
+                    });
+                    rs = self.removeDuplicates(rs);
+                    let rsDrafted = _.filter(rs, {STATUS: 'draft'});
+                    if (rsDrafted.length > 0) {
+                        return rsDrafted.length;
+                    }
+                    
+                }
             },
             getPercentage(lgu){
                 let self = this;
-                let rs = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
-                let percentage = (rs.length / 10) * 100;
-                return accounting.formatMoney(percentage,' ', 1) + ' %';
+                let rsProvince = _.filter(self.provinces, {id: lgu.province_id});
+                if (rsProvince.length) {
+                    let province = _.first(rsProvince);
+                    let rs = self.officials.filter(function(official){
+                        return official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase() &&
+                               official.CITYMUN.trim().toUpperCase()  === lgu.name.trim().toUpperCase() &&
+                               official.STATUS === 'approved';
+                    });
+                    rs = self.removeDuplicates(rs);
+                    let city = self.analyzeIfCityOrNot(lgu.name);
+                    if (city == ' 12') {
+                        let percentage = (rs.length /12) * 100;
+                        if (percentage >= 101) {
+                            return 100;
+                        }else {
+                            return percentage;
+                        }
+                    }else {
+                       let percentage = (rs.length /10) * 100;
+                        if (percentage >= 101) {
+                            return 100;
+                        }else {
+                            return percentage;
+                        }
+                    }
+                }
             },
-            getOfficialCount(lgu){
+            getTotalOfficials(lgu){
                 let self = this;
-                let rs = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
-                return rs.length;
+                let rsProvince = _.filter(self.provinces, {id: lgu.province_id});
+                if (rsProvince.length) {
+                    let province = _.first(rsProvince);
+                    let rs = self.officials.filter(function(official){
+                        return official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase() &&
+                               official.CITYMUN.trim().toUpperCase()  === lgu.name.trim().toUpperCase();
+                    });
+                    rs = self.removeDuplicates(rs);
+                    return rs.length + ' / ' + self.analyzeIfCityOrNot(lgu.name);
+                }
+            },
+            analyzeIfCityOrNot(city){
+                let self = this;
+                let str = '';
+                str = city.toLowerCase();
+                if (str.search('city') != -1) {
+                    return ' 12';
+                } else {
+                    return ' 10';
+                }
             },
             initDataTables(){
                 setTimeout(function(){
-                    $('#table-reports').DataTable();
-                }, 2000)
+                    $('#table-reports').DataTable({
+                        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
+                    });
+                }, 2000);
             },
             fetchOfficials(){
                 let self = this;
                 self.$http.get('/fetch_all_officials').then((resp) => {
                     if (resp.status === 200) {
                         let json = resp.body;
-                        self.officials = json;
+                        for (var i = json.length - 1; i >= 0; i--) {
+                            self.officials.push(json[i])
+                        }
                         self.initDataTables();
                     }
                 }, (resp) => {
@@ -178,7 +267,9 @@
                 self.$http.get('/citymun').then((resp) => {
                     if (resp.status === 200) {
                         let json = resp.body;
-                        self.citymuns = json;
+                        for (var i = json.length - 1; i >= 0; i--) {
+                            self.citymuns.push(json[i]);
+                        }
                     }
                 }, (resp) => {
                     if (resp.status === 422) {
@@ -215,21 +306,15 @@
                 }
                 
             },
-            'officials': function(){
-                 $(function() {
-                    let currentClass = '';
-                    let loading = 'fa fa-spinner fa-pulse fa-fw';
-                    let folder = 'fa fa-folder-open';
-                    // $('td i').click(function(event) {
-                    //     if ($(this).hasClass('fa-folder-open')) {
-                    //         $(this).removeClass();
-                    //         $(this).addClass(loading);
-                    //     }else {
-                    //         $(this).removeClass();
-                    //         $(this).addClass(folder);
-                    //     }
-                    // });
-                });
+            'officials': function(newOfficials){
+                 let self = this;
+                 // newOfficials.forEach(function(model){
+                 //    if (model.PROVINCE === 'LEYTE') {
+                 //        if (model.CITYMUN.trim() === 'SAN ISIDRO') {
+                 //            // console.log('san isidro')
+                 //        }
+                 //    }
+                 // })
             }
         }
     }

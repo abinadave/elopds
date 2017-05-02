@@ -16,7 +16,7 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::post('officials_fetch', 'OfficialController@fetch');
-    Route::get('province', 'ProvinceController@fetchUnique');
+    Route::get('province', 'ProvinceController@fetchProvinces');
     Route::get('citymun', 'ProvinceController@fetchCityMuns');
     Route::post('search_query_province', 'OfficialController@searchQueryProvince');
     Route::post('search_query_citymun', 'OfficialController@searchQueryCItyMun');
@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('import_officials', 'HomeController@showImportView');
     Route::post('fileuploader', 'OfficialController@importFile');
     Route::post('get_officials_by_citymun', 'OfficialController@fetchByCityMun');
+    Route::get('lgus', 'OfficialController@fetchAllLgus');
 });
 
 Route::post('importExcel', 'OfficialController@importExcel');

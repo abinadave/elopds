@@ -8,11 +8,19 @@ use Illuminate\Support\Facades\Storage;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
-
+use App\Lgu as Lgu;
 class OfficialController extends Controller
 {
+	public function fetchAllLgus(){
+		$lgus = Lgu::all();
+		return response()->json($lgus);
+	}
 	public function fetchByCityMun(Request $request){
-		$resp = Official::where('CITYMUN', $request->input('lgu'))->orderBy('POSITION_NAME','asc')->get();
+		$lgu = $request->input('lgu');
+		$province = $request->input('province');
+		// print_r($lgu);
+		// print_r($province);
+		$resp = Official::where('CITYMUN', $lgu['name'])->where('PROVINCE', $province['name'])->get();
 		return response()->json($resp);
 	}
 	public function importExcel(Request $request)
