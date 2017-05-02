@@ -91,7 +91,7 @@
                 let completedLgus = self.citymuns.filter(function(lgu) {
                     rsOfficials = _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
                     // return rsOfficials.length >= 12;
-                    console.log(rsOfficials.length)
+                    // console.log(rsOfficials.length)
                 });
                 self.completedLgus = completedLgus;
             }

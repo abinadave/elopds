@@ -15,6 +15,7 @@
                             <table id="table-reports" class="table table-hover table-condensed table-striped table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>PROVINCE</th>
                                         <th>CITY/MUNICIPALITY</th>
                                         <th style="text-align: center">OFFICIALS</th>
                                         <th style="text-align: center">PERCENTAGE</th>
@@ -25,6 +26,7 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="lgu in citymuns" v-show="lgu.CITYMUN !== '' && citymun == 0">
+                                        <td>{{ getProvince(lgu) }}</td>
                                         <td>{{ lgu.CITYMUN }}</td>
                                         <td style="text-align: center"><b>{{ getOfficialCount(lgu) }}</b> / 12</td>
                                         <td style="text-align: center"><b>{{ getPercentage(lgu) }}</b></td> 
@@ -84,6 +86,16 @@
             }
         },
         methods: {
+            getProvince(lgu){
+                let self = this;
+                if (lgu.CITYMUN !== '' && lgu.CITYMUN.length > 0) {
+                    let rs= _.filter(self.officials, {CITYMUN: lgu.CITYMUN});
+                    let first = _.first(rs);
+                    if (typeof first === 'object') {
+                        return first.PROVINCE;
+                    }
+                }
+            },
             getTotalApproved(lgu){
                 let self = this;
                 let length = _.filter(self.officials, {CITYMUN: lgu.CITYMUN, STATUS: 'approved'}).length;
