@@ -28872,6 +28872,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modal_show_officials_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modal_show_officials_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__completed_completed_inputs_vue__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__completed_completed_inputs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__completed_completed_inputs_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__report_by_province_report_by_province_vue__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__report_by_province_report_by_province_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__report_by_province_report_by_province_vue__);
 //
 //
 //
@@ -28927,7 +28929,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
+
 
 
 
@@ -28942,7 +28944,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     components: {
         'modal-involved-officials': __WEBPACK_IMPORTED_MODULE_1__modal_show_officials_vue___default.a,
-        'completed-report': __WEBPACK_IMPORTED_MODULE_2__completed_completed_inputs_vue___default.a
+        'completed-report': __WEBPACK_IMPORTED_MODULE_2__completed_completed_inputs_vue___default.a,
+        'report-by-province': __WEBPACK_IMPORTED_MODULE_3__report_by_province_report_by_province_vue___default.a
     },
     data: function data() {
         return {
@@ -50291,7 +50294,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "table-reports"
     }
   }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.citymuns), function(lgu) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.getProvince(lgu)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(lgu.name.toUpperCase()))]), _vm._v(" "), _c('td', {
+    return _c('tr', [_c('td', [_c('a', {
+      on: {
+        "click": function($event) {}
+      }
+    }, [_vm._v(_vm._s(_vm.getProvince(lgu)))])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(lgu.name.toUpperCase()))]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(_vm.getTotalDrafted(lgu)))]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
@@ -50315,6 +50322,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "menu1"
     }
+  }, [_c('report-by-province')], 1), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "menu2"
+    }
   }, [_c('completed-report', {
     attrs: {
       "citymuns": _vm.citymuns,
@@ -50323,7 +50335,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "completedlguslength": _vm.notifCompletedLgus
     }
-  })], 1), _vm._v(" "), _vm._m(2)])])]), _vm._v(" "), _c('modal-involved-officials', {
+  })], 1)])])]), _vm._v(" "), _c('modal-involved-officials', {
     attrs: {
       "modal-officials": _vm.modalOfficials
     }
@@ -50343,7 +50355,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data-toggle": "tab",
       "href": "#menu1"
     }
-  }, [_vm._v("Completed")])])])
+  }, [_vm._v("Report by Province")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("PROVINCE")]), _vm._v(" "), _c('th', [_vm._v("CITY/MUNICIPALITY")]), _vm._v(" "), _c('th', {
     staticClass: "text-center"
@@ -50360,13 +50372,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "10"
     }
   }, [_vm._v("View")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "tab-pane fade",
-    attrs: {
-      "id": "menu2"
-    }
-  }, [_c('h3', [_vm._v("Menu 2")]), _vm._v(" "), _c('p', [_vm._v("Some content in menu 2.")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -64200,6 +64205,527 @@ module.exports = Vue$3;
 __webpack_require__(131);
 module.exports = __webpack_require__(132);
 
+
+/***/ }),
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__show_modal_province_officials_vue__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__show_modal_province_officials_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__show_modal_province_officials_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        var self = this;
+        self.getAllOfficials();
+        setTimeout(function () {
+            self.getprovinces();
+        }, 1000);
+    },
+
+    components: {
+        'province-official-modal': __WEBPACK_IMPORTED_MODULE_0__show_modal_province_officials_vue___default.a
+    },
+    data: function data() {
+        return {
+            provinces: [], officials: [],
+            modalOfficials: []
+        };
+    },
+
+    methods: {
+        showOfficials: function showOfficials(province) {
+            var self = this;
+            self.modalOfficials = [];
+            $('#modal-province-officials').modal('show');
+            var rs = self.officials.filter(function (official) {
+                return official.PROVINCE.toUpperCase() === province.name.toUpperCase();
+            });
+            self.modalOfficials = rs;
+            // self.$http.post('/get_officials_by_province',{
+            //     province: province
+            // }).then((resp) => {
+            //     if (resp.status === 200) {
+            //         let json = resp.body;
+            //         json = _.uniqBy(json, function (e) {
+            //             return e.LAST_NAME && e.FIRST_NAME;
+            //         });
+            //         for (var i = json.length - 1; i >= 0; i--) {
+            //             self.modalOfficials.push(json[i]);
+            //         }
+            //     }
+            // }, (resp) => {
+            //     console.log(resp);
+            // });  
+        },
+        getWhatPosition: function getWhatPosition(province, POSITION) {
+            var self = this;
+            var rs = self.officials.filter(function (official) {
+                return official.POSITION_NAME.trim().toUpperCase() === POSITION && official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase() && official.STATUS === 'approved';
+            });
+            return rs.length;
+        },
+        getprovinces: function getprovinces() {
+            var self = this;
+            self.$http.get('/province').then(function (resp) {
+                if (resp.status === 200) {
+                    var json = resp.body;
+                    for (var i = json.length - 1; i >= 0; i--) {
+                        self.provinces.push(json[i]);
+                    };
+                }
+            }, function (resp) {
+                console.log(resp);
+            });
+        },
+        getAllOfficials: function getAllOfficials() {
+            var self = this;
+            self.$http.get('/fetch_all_officials_report_by_province').then(function (resp) {
+                if (resp.status === 200) {
+                    var json = resp.body;
+                    for (var i = json.length - 1; i >= 0; i--) {
+                        self.officials.push(json[i]);
+                    };
+                }
+            }, function (resp) {
+                console.log(resp);
+            });
+        }
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+
+/***/ }),
+/* 198 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(201)
+
+var Component = __webpack_require__(3)(
+  /* script */
+  __webpack_require__(197),
+  /* template */
+  __webpack_require__(199),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\elopds\\resources\\assets\\js\\components\\official\\report-by-province\\report_by_province.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] report_by_province.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5770ca94", Component.options)
+  } else {
+    hotAPI.reload("data-v-5770ca94", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 199 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-9",
+    staticStyle: {
+      "margin-top": "10px"
+    }
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Officials: " + _vm._s(_vm.officials.length) + ", provinces: " + _vm._s(_vm.provinces.length))]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('table', {
+    staticClass: "table table-bordered",
+    attrs: {
+      "id": "tbl-province"
+    }
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.provinces), function(province) {
+    return _c('tr', [_c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(province.name))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(_vm.getWhatPosition(province, 'PROVINCIAL GOVERNOR')))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(_vm.getWhatPosition(province, 'PROVINCIAL VICE-GOVERNOR')))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(_vm.getWhatPosition(province, 'SANGGUNIANG PANLALAWIGAN MEMBER')) + " / 10")]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_c('i', {
+      staticClass: "fa fa-folder-open text-info",
+      staticStyle: {
+        "cursor": "pointer"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showOfficials(province)
+        }
+      }
+    })])])
+  }))])])]), _vm._v(" "), _c('province-official-modal', {
+    attrs: {
+      "modal-officials": _vm.modalOfficials
+    }
+  })], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Province")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Governors")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Vice-Governors")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("SP Member")]), _vm._v(" "), _c('th', {
+    attrs: {
+      "width": "10"
+    }
+  }, [_vm._v("View")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5770ca94", module.exports)
+  }
+}
+
+/***/ }),
+/* 200 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+exports.push([module.i, "\n#tbl-province {\n    font-size: 12px;\n}\n", ""]);
+
+/***/ }),
+/* 201 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(200);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("192e33b0", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5770ca94!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./report_by_province.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5770ca94!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./report_by_province.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 202 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    },
+
+    props: {
+        modalOfficials: {
+            type: Array
+        },
+        currentLgu: {
+            type: Object
+        }
+    },
+    watch: {
+        'modalOfficials': function modalOfficials() {
+            setTimeout(function () {
+                $('#table-province-report').DataTable({
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
+                });
+            }, 2000);
+        }
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+
+/***/ }),
+/* 203 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+exports.push([module.i, "\n#table-province-report {\n  font-size: 11px;\n  padding: 2px;\n}\n", ""]);
+
+/***/ }),
+/* 204 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(206)
+
+var Component = __webpack_require__(3)(
+  /* script */
+  __webpack_require__(202),
+  /* template */
+  __webpack_require__(205),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\elopds\\resources\\assets\\js\\components\\official\\report-by-province\\show_modal_province_officials.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] show_modal_province_officials.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-198856d4", Component.options)
+  } else {
+    hotAPI.reload("data-v-198856d4", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 205 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal fade",
+    attrs: {
+      "id": "modal-province-officials",
+      "role": "dialog",
+      "aria-labelledby": "myModalLabel"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog",
+    staticStyle: {
+      "width": "80%"
+    },
+    attrs: {
+      "role": "document"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_c('table', {
+    staticClass: "table table-hover table-bordered table-condensed table-striped",
+    attrs: {
+      "id": "table-province-report"
+    }
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.modalOfficials), function(official) {
+    return _c('tr', [_c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.PROVINCE))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.POSITION_NAME))]), _vm._v(" "), _c('td', [_c('b', [_vm._v(_vm._s(official.LAST_NAME))]), _vm._v(", " + _vm._s(official.FIRST_NAME) + " " + _vm._s(official.MIDDLE_NAME))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.STATUS))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_c('b', [_vm._v(_vm._s(official.TERM_OFFICE))])])])
+  }))])]), _vm._v(" "), _vm._m(2)])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal-header"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  }, [_c('span', {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])]), _vm._v(" "), _c('h4', {
+    staticClass: "modal-title",
+    attrs: {
+      "id": "myModalLabel"
+    }
+  }, [_vm._v("ELECTED OFFICIALS "), _c('b', {
+    staticClass: "text-primary"
+  }), _vm._v("    ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("PROVINCE")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center",
+    staticStyle: {
+      "width": "400px"
+    }
+  }, [_vm._v("POSITION")]), _vm._v(" "), _c('th', {
+    staticStyle: {
+      "width": "200px"
+    }
+  }, [_vm._v("FULLNAME")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("STATUS")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center",
+    attrs: {
+      "width": "50"
+    }
+  }, [_vm._v("TERMS")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Close")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-198856d4", module.exports)
+  }
+}
+
+/***/ }),
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(203);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("4b212176", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-198856d4!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./show_modal_province_officials.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-198856d4!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./show_modal_province_officials.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

@@ -5,7 +5,7 @@
                     <div class="panel-body">
                         <ul class="nav nav-tabs">
                           <li class="active"><a  data-toggle="tab" href="#home">Report by LGU</a></li>
-                          <li><a  data-toggle="tab" href="#menu1">Completed</a></li>
+                          <li><a  data-toggle="tab" href="#menu1">Report by Province</a></li>
                           <!-- <li><a data-toggle="tab" href="#menu2">No Reports</a></li> -->
                         </ul>
                         <div class="tab-content">
@@ -24,7 +24,7 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="lgu in citymuns">
-                                        <td>{{ getProvince(lgu) }}</td>
+                                        <td><a @click="">{{ getProvince(lgu) }}</a></td>
                                         <td>{{ lgu.name.toUpperCase() }}</td>
                                         <td class="text-center">{{ getTotalDrafted(lgu) }}</td>
                                         <td class="text-center">{{ getTotalApproved(lgu) }}</td>
@@ -36,11 +36,10 @@
                             </table>
                           </div>
                           <div id="menu1" class="tab-pane fade">
-                              <completed-report @completedlguslength="notifCompletedLgus" :citymuns="citymuns" :officials="officials" ></completed-report>
+                              <report-by-province></report-by-province>
                           </div>
                           <div id="menu2" class="tab-pane fade">
-                              <h3>Menu 2</h3>
-                              <p>Some content in menu 2.</p>
+                              <completed-report @completedlguslength="notifCompletedLgus" :citymuns="citymuns" :officials="officials" ></completed-report>
                           </div>
                         </div>
                         
@@ -56,8 +55,9 @@
 </style>
 <script>
     import accounting from 'accounting'
-    import CompModalOfficials from './modal_show_officials.vue'
-    import CompCompletedReport from './completed/completed_inputs.vue'
+    import CompModalOfficials from   './modal_show_officials.vue'
+    import CompCompletedReport from  './completed/completed_inputs.vue'
+    import CompReportByProvince from './report-by-province/report_by_province.vue'
     export default {
         mounted() {
             let self = this;
@@ -67,7 +67,8 @@
         },
         components: {
             'modal-involved-officials': CompModalOfficials,
-            'completed-report': CompCompletedReport
+            'completed-report': CompCompletedReport,
+            'report-by-province': CompReportByProvince
         },
         data(){
             return {

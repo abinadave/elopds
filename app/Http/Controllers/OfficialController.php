@@ -11,9 +11,26 @@ use Illuminate\Support\Facades\Input;
 use App\Lgu as Lgu;
 class OfficialController extends Controller
 {
+	public function fetchReportByProvince(){
+		$resp = Official::whereNotIn( 'POSITION_NAME' ,  
+			[
+				'SANGGUNIANG BAYAN MEMBER', 
+				'CITY MAYOR',
+				'MUNICIPAL MAYOR',
+				'CITY VICE-MAYOR',
+				'MUNICIPAL VICE-MAYOR']
+		)->get();
+		return response()->json($resp);
+	}
 	public function fetchAllLgus(){
 		$lgus = Lgu::all();
 		return response()->json($lgus);
+	}
+	public function fetchByProvince(Request $request){
+		$lgu = $request->input('lgu');
+		$province = $request->input('province');
+		$resp = Official::where('PROVINCE', $province['name'])->get();
+		return response()->json($resp);
 	}
 	public function fetchByCityMun(Request $request){
 		$lgu = $request->input('lgu');

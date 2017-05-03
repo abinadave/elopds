@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('fileuploader', 'OfficialController@importFile');
     Route::post('get_officials_by_citymun', 'OfficialController@fetchByCityMun');
     Route::get('lgus', 'OfficialController@fetchAllLgus');
+    Route::post('get_officials_by_province', 'OfficialController@fetchByProvince');
+    Route::get('fetch_all_officials_report_by_province', 'OfficialController@fetchReportByProvince');
 });
 
 Route::post('importExcel', 'OfficialController@importExcel');
