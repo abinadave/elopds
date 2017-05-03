@@ -58,24 +58,10 @@
                 self.modalOfficials = [];
                 $('#modal-province-officials').modal('show');
                 let rs = self.officials.filter(function(official){
-                    return official.PROVINCE.toUpperCase() === province.name.toUpperCase();
+                    return official.PROVINCE.toUpperCase() === province.name.toUpperCase() &&
+                    official.STATUS === 'approved'; 
                 });
-                self.modalOfficials = rs;
-                // self.$http.post('/get_officials_by_province',{
-                //     province: province
-                // }).then((resp) => {
-                //     if (resp.status === 200) {
-                //         let json = resp.body;
-                //         json = _.uniqBy(json, function (e) {
-                //             return e.LAST_NAME && e.FIRST_NAME;
-                //         });
-                //         for (var i = json.length - 1; i >= 0; i--) {
-                //             self.modalOfficials.push(json[i]);
-                //         }
-                //     }
-                // }, (resp) => {
-                //     console.log(resp);
-                // });  
+                self.modalOfficials = _.sortBy(rs, [function(o) { return o.POSITION_NAME; }]);
             },
             getWhatPosition(province, POSITION){
                 let self = this;

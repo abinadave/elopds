@@ -1,7 +1,7 @@
 
 <template>
   <div class="modal fade" id="modal-province-officials" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document" style="width: 80%">
+    <div class="modal-dialog" role="document" style="width: 87%">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -11,7 +11,7 @@
               <table id="table-province-report" class="table table-hover table-bordered table-condensed table-striped">
                   <thead>
                       <tr>
-                          <th class="text-center">PROVINCE</th>
+                          <th width="200" class="text-center">PROVINCE</th>
                           <th class="text-center" style="width: 400px">POSITION</th>
                           <th style="width: 200px">FULLNAME</th>
                           <th class="text-center">STATUS</th>
@@ -38,8 +38,8 @@
 </template>
 <style type="text/css">
   #table-province-report {
-    font-size: 11px;
-    padding: 2px;
+    font-size: 10px;
+    padding: 1px;
   }
 </style>
 <script>
@@ -58,9 +58,7 @@
         watch: {
             'modalOfficials': function(){
                 setTimeout(function(){
-                    $('#table-province-report').DataTable({
-                        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
-                    });
+                    
                 }, 2000);
             }
         }

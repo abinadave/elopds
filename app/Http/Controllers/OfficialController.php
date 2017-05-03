@@ -12,13 +12,11 @@ use App\Lgu as Lgu;
 class OfficialController extends Controller
 {
 	public function fetchReportByProvince(){
-		$resp = Official::whereNotIn( 'POSITION_NAME' ,  
+		$resp = Official::whereIn( 'POSITION_NAME' ,  
 			[
-				'SANGGUNIANG BAYAN MEMBER', 
-				'CITY MAYOR',
-				'MUNICIPAL MAYOR',
-				'CITY VICE-MAYOR',
-				'MUNICIPAL VICE-MAYOR']
+				'SANGGUNIANG PANLALAWIGAN MEMBER', 
+				'PROVINCIAL GOVERNOR',
+				'PROVINCIAL VICE-GOVERNOR']
 		)->get();
 		return response()->json($resp);
 	}
