@@ -7,6 +7,8 @@
                     <thead>
                         <tr>
                             <th>Province</th>
+                            <th class="text-center">Draft</th>
+                            <th class="text-center">Approved</th>
                             <th class="text-center">Governors</th>
                             <th class="text-center">Vice-Governors</th>
                             <th class="text-center">SP Member</th>
@@ -16,6 +18,8 @@
                     <tbody>
                         <tr v-for="province in provinces">
                             <td class="text-center">{{ province.name }}</td>
+                            <td class="text-center">{{ getTotalDrafted(province) }}</td>
+                            <td class="text-center">{{ getTotalApproved(province) }}</td>
                             <td class="text-center">{{ getWhatPosition(province, 'PROVINCIAL GOVERNOR') }}</td>
                             <td class="text-center">{{ getWhatPosition(province, 'PROVINCIAL VICE-GOVERNOR') }}</td>
                             <td class="text-center">{{ getWhatPosition(province, 'SANGGUNIANG PANLALAWIGAN MEMBER') }} / 10</td>
@@ -53,6 +57,20 @@
             }
         },
         methods: {
+            getTotalDrafted(province){
+                let self = this;
+                return self.officials.filter(function(official){
+                    return official.PROVINCE.toUpperCase() === province.name.toUpperCase() &&
+                    official.STATUS === 'draft'; 
+                }).length;
+            },
+            getTotalApproved(province){
+                let self = this;
+                return self.officials.filter(function(official){
+                    return official.PROVINCE.toUpperCase() === province.name.toUpperCase() &&
+                    official.STATUS === 'approved'; 
+                }).length;
+            },
             showOfficials(province){
                 let self = this;
                 self.modalOfficials = [];

@@ -29495,6 +29495,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -29517,6 +29521,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        getTotalDrafted: function getTotalDrafted(province) {
+            var self = this;
+            return self.officials.filter(function (official) {
+                return official.PROVINCE.toUpperCase() === province.name.toUpperCase() && official.STATUS === 'draft';
+            }).length;
+        },
+        getTotalApproved: function getTotalApproved(province) {
+            var self = this;
+            return self.officials.filter(function (official) {
+                return official.PROVINCE.toUpperCase() === province.name.toUpperCase() && official.STATUS === 'approved';
+            }).length;
+        },
         showOfficials: function showOfficials(province) {
             var self = this;
             self.modalOfficials = [];
@@ -50479,6 +50495,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "text-center"
     }, [_vm._v(_vm._s(province.name))]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
+    }, [_vm._v(_vm._s(_vm.getTotalDrafted(province)))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(_vm.getTotalApproved(province)))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
     }, [_vm._v(_vm._s(_vm.getWhatPosition(province, 'PROVINCIAL GOVERNOR')))]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(_vm.getWhatPosition(province, 'PROVINCIAL VICE-GOVERNOR')))]), _vm._v(" "), _c('td', {
@@ -50503,6 +50523,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Province")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Draft")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Approved")]), _vm._v(" "), _c('th', {
     staticClass: "text-center"
   }, [_vm._v("Governors")]), _vm._v(" "), _c('th', {
     staticClass: "text-center"
