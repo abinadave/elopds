@@ -18,11 +18,27 @@
                     <tbody>
                         <tr v-for="province in provinces">
                             <td class="text-center">{{ province.name }}</td>
-                            <td class="text-center">{{ getTotalDrafted(province) }}</td>
-                            <td class="text-center">{{ getTotalApproved(province) }}</td>
-                            <td class="text-center">{{ getWhatPosition(province, 'PROVINCIAL GOVERNOR') }}</td>
-                            <td class="text-center">{{ getWhatPosition(province, 'PROVINCIAL VICE-GOVERNOR') }}</td>
-                            <td class="text-center">{{ getWhatPosition(province, 'SANGGUNIANG PANLALAWIGAN MEMBER') }} / 10</td>
+                            <td class="text-center">
+                                <a @click="showDraftedOfficials(province)" style="cursor: pointer;">{{ getTotalDrafted(province) }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a @click="showTotalApproved(province)" style="cursor: pointer;">{{ getTotalApproved(province) }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a @click="showTotalGovernors(province)" style="cursor: pointer;">
+                                    {{ getWhatPosition(province, 'PROVINCIAL GOVERNOR') }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a style="cursor: pointer" @click="showTotalViceGovernors(province)">
+                                    {{ getWhatPosition(province, 'PROVINCIAL VICE-GOVERNOR') }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a style="cursor: pointer" @click="showTotalSangguniangPanlalawiganMemger(province)">
+                                {{ getWhatPosition(province, 'SANGGUNIANG PANLALAWIGAN MEMBER') }} 
+                                </a>
+                                / 10</td>
                             <td class="text-center"><i @click="showOfficials(province)" class="fa fa-folder-open text-info" style="cursor: pointer"></i></td>
                         </tr>
                     </tbody>
@@ -53,16 +69,34 @@
         data(){
             return {
                 provinces: [], officials: [],
-                modalOfficials: []
+                modalOfficials: [],
+                currentProvince: { name: '...' }
             }
         },
         methods: {
+
+            showDraftedOfficials(province){
+                let self = this;
+                $('#modal-province-officials').modal('show');
+                self.modalOfficials = self.officials.filter(function(official){
+                    return official.PROVINCE.toUpperCase() === province.name.toUpperCase() &&
+                    official.STATUS === 'draft'; 
+                });
+            },
             getTotalDrafted(province){
                 let self = this;
                 return self.officials.filter(function(official){
                     return official.PROVINCE.toUpperCase() === province.name.toUpperCase() &&
                     official.STATUS === 'draft'; 
                 }).length;
+            },
+            showTotalApproved(province){
+                let self = this;
+                $('#modal-province-officials').modal('show');
+                self.modalOfficials = self.officials.filter(function(official){
+                    return official.PROVINCE.toUpperCase() === province.name.toUpperCase() &&
+                    official.STATUS === 'approved'; 
+                });
             },
             getTotalApproved(province){
                 let self = this;
@@ -80,6 +114,33 @@
                     official.STATUS === 'approved'; 
                 });
                 self.modalOfficials = _.sortBy(rs, [function(o) { return o.POSITION_NAME; }]);
+            },
+            showTotalGovernors(province){
+                let self = this;
+                $('#modal-province-officials').modal('show');
+                let rs = self.officials.filter(function(official){
+                    return official.POSITION_NAME.trim().toUpperCase() === 'PROVINCIAL GOVERNOR' &&
+                           official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase()
+                });
+                self.modalOfficials = rs;
+            },
+            showTotalViceGovernors(province){
+                let self = this;
+                $('#modal-province-officials').modal('show');
+                let rs = self.officials.filter(function(official){
+                    return official.POSITION_NAME.trim().toUpperCase() === 'PROVINCIAL VICE-GOVERNOR' &&
+                           official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase()
+                });
+                self.modalOfficials = rs;
+            },
+            showTotalSangguniangPanlalawiganMemger(province){
+                let self = this;
+                $('#modal-province-officials').modal('show');
+                let rs = self.officials.filter(function(official){
+                    return official.POSITION_NAME.trim().toUpperCase() === 'SANGGUNIANG PANLALAWIGAN MEMBER' &&
+                           official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase()
+                });
+                self.modalOfficials = rs;
             },
             getWhatPosition(province, POSITION){
                 let self = this;

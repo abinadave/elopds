@@ -29499,6 +29499,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -29516,16 +29532,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             provinces: [], officials: [],
-            modalOfficials: []
+            modalOfficials: [],
+            currentProvince: { name: '...' }
         };
     },
 
     methods: {
+        showDraftedOfficials: function showDraftedOfficials(province) {
+            var self = this;
+            $('#modal-province-officials').modal('show');
+            self.modalOfficials = self.officials.filter(function (official) {
+                return official.PROVINCE.toUpperCase() === province.name.toUpperCase() && official.STATUS === 'draft';
+            });
+        },
         getTotalDrafted: function getTotalDrafted(province) {
             var self = this;
             return self.officials.filter(function (official) {
                 return official.PROVINCE.toUpperCase() === province.name.toUpperCase() && official.STATUS === 'draft';
             }).length;
+        },
+        showTotalApproved: function showTotalApproved(province) {
+            var self = this;
+            $('#modal-province-officials').modal('show');
+            self.modalOfficials = self.officials.filter(function (official) {
+                return official.PROVINCE.toUpperCase() === province.name.toUpperCase() && official.STATUS === 'approved';
+            });
         },
         getTotalApproved: function getTotalApproved(province) {
             var self = this;
@@ -29543,6 +29574,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.modalOfficials = _.sortBy(rs, [function (o) {
                 return o.POSITION_NAME;
             }]);
+        },
+        showTotalGovernors: function showTotalGovernors(province) {
+            var self = this;
+            $('#modal-province-officials').modal('show');
+            var rs = self.officials.filter(function (official) {
+                return official.POSITION_NAME.trim().toUpperCase() === 'PROVINCIAL GOVERNOR' && official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase();
+            });
+            self.modalOfficials = rs;
+        },
+        showTotalViceGovernors: function showTotalViceGovernors(province) {
+            var self = this;
+            $('#modal-province-officials').modal('show');
+            var rs = self.officials.filter(function (official) {
+                return official.POSITION_NAME.trim().toUpperCase() === 'PROVINCIAL VICE-GOVERNOR' && official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase();
+            });
+            self.modalOfficials = rs;
+        },
+        showTotalSangguniangPanlalawiganMemger: function showTotalSangguniangPanlalawiganMemger(province) {
+            var self = this;
+            $('#modal-province-officials').modal('show');
+            var rs = self.officials.filter(function (official) {
+                return official.POSITION_NAME.trim().toUpperCase() === 'SANGGUNIANG PANLALAWIGAN MEMBER' && official.PROVINCE.trim().toUpperCase() === province.name.trim().toUpperCase();
+            });
+            self.modalOfficials = rs;
         },
         getWhatPosition: function getWhatPosition(province, POSITION) {
             var self = this;
@@ -32106,7 +32161,7 @@ exports.push([module.i, "\n#tbl-completed {\n    font-size: 12px;\n}\n", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
-exports.push([module.i, "\n#table-province-report {\n  font-size: 10px;\n  padding: 1px;\n}\n", ""]);
+exports.push([module.i, "\n#table-province-report {\n  font-size: 12px;\n  padding: 1px;\n}\n", ""]);
 
 /***/ }),
 /* 164 */
@@ -49938,7 +49993,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "200px"
     }
   }, [_vm._v("FULLNAME")]), _vm._v(" "), _c('th', {
-    staticClass: "text-center"
+    staticClass: "text-center",
+    attrs: {
+      "width": "100"
+    }
   }, [_vm._v("STATUS")]), _vm._v(" "), _c('th', {
     staticClass: "text-center",
     attrs: {
@@ -50495,15 +50553,60 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "text-center"
     }, [_vm._v(_vm._s(province.name))]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(_vm.getTotalDrafted(province)))]), _vm._v(" "), _c('td', {
+    }, [_c('a', {
+      staticStyle: {
+        "cursor": "pointer"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showDraftedOfficials(province)
+        }
+      }
+    }, [_vm._v(_vm._s(_vm.getTotalDrafted(province)))])]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(_vm.getTotalApproved(province)))]), _vm._v(" "), _c('td', {
+    }, [_c('a', {
+      staticStyle: {
+        "cursor": "pointer"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showTotalApproved(province)
+        }
+      }
+    }, [_vm._v(_vm._s(_vm.getTotalApproved(province)))])]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(_vm.getWhatPosition(province, 'PROVINCIAL GOVERNOR')))]), _vm._v(" "), _c('td', {
+    }, [_c('a', {
+      staticStyle: {
+        "cursor": "pointer"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showTotalGovernors(province)
+        }
+      }
+    }, [_vm._v("\n                                " + _vm._s(_vm.getWhatPosition(province, 'PROVINCIAL GOVERNOR')) + "\n                            ")])]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(_vm.getWhatPosition(province, 'PROVINCIAL VICE-GOVERNOR')))]), _vm._v(" "), _c('td', {
+    }, [_c('a', {
+      staticStyle: {
+        "cursor": "pointer"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showTotalViceGovernors(province)
+        }
+      }
+    }, [_vm._v("\n                                " + _vm._s(_vm.getWhatPosition(province, 'PROVINCIAL VICE-GOVERNOR')) + "\n                            ")])]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(_vm.getWhatPosition(province, 'SANGGUNIANG PANLALAWIGAN MEMBER')) + " / 10")]), _vm._v(" "), _c('td', {
+    }, [_c('a', {
+      staticStyle: {
+        "cursor": "pointer"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showTotalSangguniangPanlalawiganMemger(province)
+        }
+      }
+    }, [_vm._v("\n                            " + _vm._s(_vm.getWhatPosition(province, 'SANGGUNIANG PANLALAWIGAN MEMBER')) + " \n                            ")]), _vm._v("\n                            / 10")]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
     }, [_c('i', {
       staticClass: "fa fa-folder-open text-info",

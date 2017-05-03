@@ -14,7 +14,7 @@
                           <th width="200" class="text-center">PROVINCE</th>
                           <th class="text-center" style="width: 400px">POSITION</th>
                           <th style="width: 200px">FULLNAME</th>
-                          <th class="text-center">STATUS</th>
+                          <th width="100" class="text-center">STATUS</th>
                           <th width="50" class="text-center">TERMS</th>
                       </tr>
                   </thead>
@@ -38,7 +38,7 @@
 </template>
 <style type="text/css">
   #table-province-report {
-    font-size: 10px;
+    font-size: 12px;
     padding: 1px;
   }
 </style>
