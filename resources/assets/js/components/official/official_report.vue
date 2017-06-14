@@ -185,7 +185,6 @@
                     if (rsDrafted.length > 0) {
                         return rsDrafted.length;
                     }
-                    
                 }
             },
             getPercentage(lgu){
@@ -227,7 +226,7 @@
                                official.CITYMUN.trim().toUpperCase()  === lgu.name.trim().toUpperCase();
                     });
                     rs = self.removeDuplicates(rs);
-                    return rs.length + ' / ' + self.analyzeIfCityOrNot(lgu.name);
+                    return rs.length + ' of ' + self.analyzeIfCityOrNot(lgu.name);
                 }
             },
             analyzeIfCityOrNot(city){

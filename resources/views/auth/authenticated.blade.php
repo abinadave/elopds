@@ -45,6 +45,7 @@
                     <ul class="nav navbar-nav">
                         &nbsp;
                         <li><router-link to="/officials/report">Reports</router-link></li>
+                        <li><router-link to="/officials/summary">Summary</router-link></li>
                         <li><router-link to="/officials/data">Officials Data</router-link></li>
                         <li><a href="{{ url('/import_officials') }}">Import</a></li>
                     </ul>
@@ -82,8 +83,9 @@
         </nav>
 
         <router-view></router-view>
+        
     </div>
-
+    <div id="print-here"></div>
     <!-- Scripts -->
     <link rel="stylesheet" type="text/css" href="dt/DataTables-master/media/css/dataTables.bootstrap.min.css">
     <!-- <link rel="stylesheet" type="text/css" href="dt/DataTables-master/media/css/jquery.dataTables.min.css"> -->
