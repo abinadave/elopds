@@ -7,13 +7,13 @@
                     <select v-model="province" class="form-control" style="width: 300px; display: inline-block;">
                         <option :value="0">Select Province</option>
                         <option :value="arr.PROVINCE" v-for="arr in provinces">
-                             {{ arr.PROVINCE }}
+                             {{ arr.name }}
                         </option>
                     </select>
                     <select v-model="citymun" class="form-control" style="width: 300px; display: inline-block;">
                         <option :value="0">Select City/Mun</option>
                         <option :value="arr.CITYMUN" v-for="arr in citymuns">
-                             {{ arr.CITYMUN }}
+                             {{ arr.name }}
                         </option>
                     </select>
                     <div class="pull-right">
@@ -151,6 +151,7 @@
                 self.$http.get('/province').then((resp) => {
                     if (resp.status === 200) {
                         let json = resp.body;
+                        console.log(json)
                         self.provinces = json;
                     }
                 }, (resp) => {
@@ -240,6 +241,11 @@
             }
         },
         watch: {
+            'provinces': function(newVal){
+                $.each(newVal, function(index, val) {
+                    console.log(index + ': ' + val);
+                });
+            },
             'province': function(newVal){
                 let self = this;
                 self.searchQueryProvince();

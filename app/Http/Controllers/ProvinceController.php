@@ -13,7 +13,7 @@ class ProvinceController extends Controller
 		return response()->json($resp);
 	}
 	public function fetchCityMuns(){
-		$resp = DB::table('lgus')->orderBy('name', 'desc')->get();
+		$resp = DB::table('lgus')->orderBy('name', 'asc')->get();
 		return response()->json($resp);
 	}
     public function fetchUnique(){
@@ -21,7 +21,7 @@ class ProvinceController extends Controller
     	return response()->json($resp);
     }
     public function fetchProvinces(){
-    	$resp = DB::table('provinces')->get();
+    	$resp = DB::table('provinces')->orderBy('name','asc')->get();
 		return response()->json($resp);
     }
 }

@@ -29334,6 +29334,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.$http.get('/province').then(function (resp) {
                 if (resp.status === 200) {
                     var json = resp.body;
+                    console.log(json);
                     self.provinces = json;
                 }
             }, function (resp) {
@@ -29423,6 +29424,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     watch: {
+        'provinces': function provinces(newVal) {
+            $.each(newVal, function (index, val) {
+                console.log(index + ': ' + val);
+            });
+        },
         'province': function province(newVal) {
             var self = this;
             self.searchQueryProvince();
@@ -50970,7 +50976,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": arr.PROVINCE
       }
-    }, [_vm._v("\n                     " + _vm._s(arr.PROVINCE) + "\n                ")])
+    }, [_vm._v("\n                     " + _vm._s(arr.name) + "\n                ")])
   })], 2), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
@@ -51003,7 +51009,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": arr.CITYMUN
       }
-    }, [_vm._v("\n                     " + _vm._s(arr.CITYMUN) + "\n                ")])
+    }, [_vm._v("\n                     " + _vm._s(arr.name) + "\n                ")])
   })], 2), _vm._v(" "), _c('div', {
     staticClass: "pull-right"
   }, [_c('label', [_vm._v("Officials Length " + _vm._s(_vm.officials.length))])]), _vm._v(" "), _c('input', {
