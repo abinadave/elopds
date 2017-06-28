@@ -24,8 +24,8 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="lgu in citymuns">
-                                        <td><a @click="">{{ getProvince(lgu) }}</a></td>
-                                        <td>{{ lgu.name.toUpperCase() }}</td>
+                                        <td><a>{{ getProvince(lgu) }}</a></td>
+                                        <td>{{ lgu.name }}</td>
                                         <td class="text-center">{{ getTotalDrafted(lgu) }}</td>
                                         <td class="text-center">{{ getTotalApproved(lgu) }}</td>
                                         <td>{{ getPercentage(lgu) }} %</td>
@@ -267,6 +267,7 @@
                 self.$http.get('/citymun').then((resp) => {
                     if (resp.status === 200) {
                         let json = resp.body;
+                        console.log(json)
                         for (var i = json.length - 1; i >= 0; i--) {
                             self.citymuns.push(json[i]);
                         }

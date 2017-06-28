@@ -7,20 +7,21 @@
                     <select v-model="province" class="form-control" style="width: 300px; display: inline-block;">
                         <option :value="0">Select Province</option>
                         <option :value="arr.PROVINCE" v-for="arr in provinces">
-                             {{ arr.name }}
+                             {{ arr.PROVINCE }}
                         </option>
                     </select>
                     <select v-model="citymun" class="form-control" style="width: 300px; display: inline-block;">
                         <option :value="0">Select City/Mun</option>
                         <option :value="arr.CITYMUN" v-for="arr in citymuns">
-                             {{ arr.name }}
+                             {{ arr.CITYMUN }}
                         </option>
                     </select>
                     <div class="pull-right">
                         <label>Officials Length {{ officials.length }}</label>
                     </div>
                     <input @keyup="changeInKeyword" @keyup.enter="searchQuery" v-model="search" type="text" class="form-control" style="width: 250px; display: inline-block; border-radius: 15px; margin-bottom: 10px" placeholder="Search for local official">
-                    <table class="table table-condensed table-hover table-striped table-bordered" id="table-officials">
+                    <div style="overflow: auto">
+                    <table style="width: 2000px" class="table table-condensed table-hover table-striped table-bordered" id="table-officials">
                         <thead>
                             <tr>
                                 <th lass="text-center">PROVINCE</th>
@@ -29,9 +30,12 @@
                                 <th lass="text-center">AFFILIATE</th>
                                 <th lass="text-center">POSITION NAME</th>
                                 <th lass="text-center">STATUS</th>
-                                <th>BIRTH DATE</th>
+                                <!-- <th>BIRTH DATE</th> -->
                                 <th lass="text-center">SEX</th>
                                 <th>TERM OFFICE</th>
+                                <th>FAX</th>
+                                <th>CELLPHONE</th>
+                                <th>EMAIL</th>
                                 <th width="150">Additional Description</th>
                             </tr>
                         </thead>
@@ -43,13 +47,17 @@
                                 <th class="text-center">{{ official.AFFILIATE }}</th>
                                 <th class="text-center">{{ official.POSITION_NAME }}</th>
                                 <th class="text-center">{{ official.STATUS }}</th>
-                                <th>{{ getBirthDate(official.BIRTH_DATE) }}</th>
+                                <!-- <th>{{ getBirthDate(official.BIRTH_DATE) }}</th> -->
                                 <th class="text-center">{{ official.SEX }}</th>
                                 <th class="text-center">{{ official.TERM_OFFICE }}</th>
+                                <th class="text-center">{{ official.FAX }}</th>
+                                <th class="text-center">{{ official.CELLPHONE }}</th>
+                                <th class="text-center">{{ official.EMAIL }}</th>
                                 <th><a @click="showAdditionalDetials(official)" style="cursor: pointer">Additional details</a></th>
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
             <modal-details :officials="officials" :current-official="currentOfficial"></modal-details>
@@ -109,7 +117,7 @@
             },
             fetchCityMuns(){
                 let self = this;
-                self.$http.get('/citymun').then((resp) => {
+                self.$http.get('/citymun_filtering').then((resp) => {
                     if (resp.status === 200) {
                         let json = resp.body;
                         self.citymuns = json;
@@ -127,7 +135,7 @@
                     let dob = str[0];
                     let formatedDate = moment(dob).format('MMMM DD, YYYY');
                     if (formatedDate !== 'Invalid date') {
-                        return 
+                        return formatedDate;
                     }
                 }else {
                     return date;
@@ -148,7 +156,7 @@
             },
             fetchProvince(){
                 let self = this;
-                self.$http.get('/province').then((resp) => {
+                self.$http.get('/province_filtering').then((resp) => {
                     if (resp.status === 200) {
                         let json = resp.body;
                         console.log(json)

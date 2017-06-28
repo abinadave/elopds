@@ -12,12 +12,16 @@ class ProvinceController extends Controller
 		$resp = DB::table('officials')->where('PROVINCE', $province)->select(DB::raw('distinct CITYMUN'))->orderBy('CITYMUN', 'ASC')->get();
 		return response()->json($resp);
 	}
+	public function fetchAllCityMuns(Request $request){
+		$resp = DB::table('officials')->select(DB::raw('distinct CITYMUN'))->orderBy('CITYMUN', 'ASC')->get();
+		return response()->json($resp);
+	}
 	public function fetchCityMuns(){
 		$resp = DB::table('lgus')->orderBy('name', 'asc')->get();
 		return response()->json($resp);
 	}
     public function fetchUnique(){
-    	$resp = DB::table('officials')->select(DB::raw('PROVINCE'))->orderBy('PROVINCE', 'ASC')->get();
+    	$resp = DB::table('officials')->select(DB::raw('distinct PROVINCE'))->orderBy('PROVINCE', 'ASC')->get();
     	return response()->json($resp);
     }
     public function fetchProvinces(){

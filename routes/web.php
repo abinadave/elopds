@@ -16,8 +16,17 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::post('officials_fetch', 'OfficialController@fetch');
+
+    /* Do not Edit This one this is for reporting puroses */
     Route::get('province', 'ProvinceController@fetchProvinces');
     Route::get('citymun', 'ProvinceController@fetchCityMuns');
+    /* Do not Edit This one*/
+
+    /* Do not Edit This one this is for reporting puroses */
+    Route::get('province_filtering', 'ProvinceController@fetchUnique');
+    Route::get('citymun_filtering', 'ProvinceController@fetchAllCityMuns');
+    /* Do not Edit This one*/
+
     Route::post('search_query_province', 'OfficialController@searchQueryProvince');
     Route::post('search_query_citymun', 'OfficialController@searchQueryCItyMun');
     Route::post('get_relared_mun', 'ProvinceController@fetchRelatedCityMun');

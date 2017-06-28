@@ -29119,6 +29119,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.$http.get('/citymun').then(function (resp) {
                 if (resp.status === 200) {
                     var json = resp.body;
+                    console.log(json);
                     for (var i = json.length - 1; i >= 0; i--) {
                         self.citymuns.push(json[i]);
                     }
@@ -29245,6 +29246,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -29293,7 +29302,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         fetchCityMuns: function fetchCityMuns() {
             var self = this;
-            self.$http.get('/citymun').then(function (resp) {
+            self.$http.get('/citymun_filtering').then(function (resp) {
                 if (resp.status === 200) {
                     var json = resp.body;
                     self.citymuns = json;
@@ -29311,7 +29320,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var dob = str[0];
                 var formatedDate = __WEBPACK_IMPORTED_MODULE_0_moment___default()(dob).format('MMMM DD, YYYY');
                 if (formatedDate !== 'Invalid date') {
-                    return;
+                    return formatedDate;
                 }
             } else {
                 return date;
@@ -29331,7 +29340,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         fetchProvince: function fetchProvince() {
             var self = this;
-            self.$http.get('/province').then(function (resp) {
+            self.$http.get('/province_filtering').then(function (resp) {
                 if (resp.status === 200) {
                     var json = resp.body;
                     console.log(json);
@@ -50976,7 +50985,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": arr.PROVINCE
       }
-    }, [_vm._v("\n                     " + _vm._s(arr.name) + "\n                ")])
+    }, [_vm._v("\n                     " + _vm._s(arr.PROVINCE) + "\n                ")])
   })], 2), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
@@ -51009,7 +51018,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": arr.CITYMUN
       }
-    }, [_vm._v("\n                     " + _vm._s(arr.name) + "\n                ")])
+    }, [_vm._v("\n                     " + _vm._s(arr.CITYMUN) + "\n                ")])
   })], 2), _vm._v(" "), _c('div', {
     staticClass: "pull-right"
   }, [_c('label', [_vm._v("Officials Length " + _vm._s(_vm.officials.length))])]), _vm._v(" "), _c('input', {
@@ -51043,8 +51052,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.search = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('table', {
+  }), _vm._v(" "), _c('div', {
+    staticStyle: {
+      "overflow": "auto"
+    }
+  }, [_c('table', {
     staticClass: "table table-condensed table-hover table-striped table-bordered",
+    staticStyle: {
+      "width": "2000px"
+    },
     attrs: {
       "id": "table-officials"
     }
@@ -51063,11 +51079,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "text-center"
     }, [_vm._v(_vm._s(official.POSITION_NAME))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(official.STATUS))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.getBirthDate(official.BIRTH_DATE)))]), _vm._v(" "), _c('th', {
+    }, [_vm._v(_vm._s(official.STATUS))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(official.SEX))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(official.TERM_OFFICE))]), _vm._v(" "), _c('th', [_c('a', {
+    }, [_vm._v(_vm._s(official.TERM_OFFICE))]), _vm._v(" "), _c('th', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.FAX))]), _vm._v(" "), _c('th', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.CELLPHONE))]), _vm._v(" "), _c('th', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.EMAIL))]), _vm._v(" "), _c('th', [_c('a', {
       staticStyle: {
         "cursor": "pointer"
       },
@@ -51077,7 +51099,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Additional details")])])])
-  }))])])]), _vm._v(" "), _c('modal-details', {
+  }))])])])]), _vm._v(" "), _c('modal-details', {
     attrs: {
       "officials": _vm.officials,
       "current-official": _vm.currentOfficial
@@ -51108,11 +51130,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "lass": "text-center"
     }
-  }, [_vm._v("STATUS")]), _vm._v(" "), _c('th', [_vm._v("BIRTH DATE")]), _vm._v(" "), _c('th', {
+  }, [_vm._v("STATUS")]), _vm._v(" "), _c('th', {
     attrs: {
       "lass": "text-center"
     }
-  }, [_vm._v("SEX")]), _vm._v(" "), _c('th', [_vm._v("TERM OFFICE")]), _vm._v(" "), _c('th', {
+  }, [_vm._v("SEX")]), _vm._v(" "), _c('th', [_vm._v("TERM OFFICE")]), _vm._v(" "), _c('th', [_vm._v("FAX")]), _vm._v(" "), _c('th', [_vm._v("CELLPHONE")]), _vm._v(" "), _c('th', [_vm._v("EMAIL")]), _vm._v(" "), _c('th', {
     attrs: {
       "width": "150"
     }
@@ -51150,11 +51172,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "table-reports"
     }
   }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.citymuns), function(lgu) {
-    return _c('tr', [_c('td', [_c('a', {
-      on: {
-        "click": function($event) {}
-      }
-    }, [_vm._v(_vm._s(_vm.getProvince(lgu)))])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(lgu.name.toUpperCase()))]), _vm._v(" "), _c('td', {
+    return _c('tr', [_c('td', [_c('a', [_vm._v(_vm._s(_vm.getProvince(lgu)))])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(lgu.name))]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(_vm.getTotalDrafted(lgu)))]), _vm._v(" "), _c('td', {
       staticClass: "text-center"
