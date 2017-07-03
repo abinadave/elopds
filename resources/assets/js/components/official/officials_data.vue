@@ -26,16 +26,19 @@
                             <tr>
                                 <th lass="text-center">PROVINCE</th>
                                 <th lass="text-center">CITY / MUN</th>
-                                <th width="300">FULLNAME</th>
-                                <th lass="text-center">AFFILIATE</th>
+                                 <th lass="text-center">AFFILIATE</th>
                                 <th lass="text-center">POSITION NAME</th>
+                                <th width="300">FULLNAME</th>
+                                <th>CELLPHONE</th>
+                                <th></th>
+                                <th></th>
+                                <th>EMAIL</th>
                                 <th lass="text-center">STATUS</th>
                                 <!-- <th>BIRTH DATE</th> -->
                                 <th lass="text-center">SEX</th>
                                 <th>TERM OFFICE</th>
                                 <th>FAX</th>
-                                <th>CELLPHONE</th>
-                                <th>EMAIL</th>
+                                
                                 <th width="150">Additional Description</th>
                             </tr>
                         </thead>
@@ -43,16 +46,19 @@
                             <tr style="cursor: pointer" v-for="official in officials">
                                 <th class="text-center">{{ official.PROVINCE }}</th>
                                 <th class="text-center">{{ official.CITYMUN }}</th>
-                                <th><b>{{ official.LAST_NAME }}</b>, {{ official.FIRST_NAME }} {{ official.MIDDLE_NAME }}</th>
                                 <th class="text-center">{{ official.AFFILIATE }}</th>
                                 <th class="text-center">{{ official.POSITION_NAME }}</th>
+                                <th><b>{{ official.LAST_NAME }}</b>, {{ official.FIRST_NAME }} {{ official.MIDDLE_NAME }}</th>
+                                <th class="text-center">{{ official.CELLPHONE }}</th>
+                                <td></td>
+                                <td></td>
+                                <th class="text-center">{{ official.EMAIL }}</th>
                                 <th class="text-center">{{ official.STATUS }}</th>
                                 <!-- <th>{{ getBirthDate(official.BIRTH_DATE) }}</th> -->
                                 <th class="text-center">{{ official.SEX }}</th>
                                 <th class="text-center">{{ official.TERM_OFFICE }}</th>
                                 <th class="text-center">{{ official.FAX }}</th>
-                                <th class="text-center">{{ official.CELLPHONE }}</th>
-                                <th class="text-center">{{ official.EMAIL }}</th>
+                                
                                 <th><a @click="showAdditionalDetials(official)" style="cursor: pointer">Additional details</a></th>
                             </tr>
                         </tbody>

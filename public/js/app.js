@@ -29254,6 +29254,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -51073,11 +51079,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "text-center"
     }, [_vm._v(_vm._s(official.PROVINCE))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(official.CITYMUN))]), _vm._v(" "), _c('th', [_c('b', [_vm._v(_vm._s(official.LAST_NAME))]), _vm._v(", " + _vm._s(official.FIRST_NAME) + " " + _vm._s(official.MIDDLE_NAME))]), _vm._v(" "), _c('th', {
+    }, [_vm._v(_vm._s(official.CITYMUN))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(official.AFFILIATE))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(official.POSITION_NAME))]), _vm._v(" "), _c('th', {
+    }, [_vm._v(_vm._s(official.POSITION_NAME))]), _vm._v(" "), _c('th', [_c('b', [_vm._v(_vm._s(official.LAST_NAME))]), _vm._v(", " + _vm._s(official.FIRST_NAME) + " " + _vm._s(official.MIDDLE_NAME))]), _vm._v(" "), _c('th', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.CELLPHONE))]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td'), _vm._v(" "), _c('th', {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(official.EMAIL))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(official.STATUS))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
@@ -51085,11 +51095,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "text-center"
     }, [_vm._v(_vm._s(official.TERM_OFFICE))]), _vm._v(" "), _c('th', {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(official.FAX))]), _vm._v(" "), _c('th', {
-      staticClass: "text-center"
-    }, [_vm._v(_vm._s(official.CELLPHONE))]), _vm._v(" "), _c('th', {
-      staticClass: "text-center"
-    }, [_vm._v(_vm._s(official.EMAIL))]), _vm._v(" "), _c('th', [_c('a', {
+    }, [_vm._v(_vm._s(official.FAX))]), _vm._v(" "), _c('th', [_c('a', {
       staticStyle: {
         "cursor": "pointer"
       },
@@ -51116,10 +51122,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("CITY / MUN")]), _vm._v(" "), _c('th', {
     attrs: {
-      "width": "300"
-    }
-  }, [_vm._v("FULLNAME")]), _vm._v(" "), _c('th', {
-    attrs: {
       "lass": "text-center"
     }
   }, [_vm._v("AFFILIATE")]), _vm._v(" "), _c('th', {
@@ -51128,13 +51130,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("POSITION NAME")]), _vm._v(" "), _c('th', {
     attrs: {
+      "width": "300"
+    }
+  }, [_vm._v("FULLNAME")]), _vm._v(" "), _c('th', [_vm._v("CELLPHONE")]), _vm._v(" "), _c('th'), _vm._v(" "), _c('th'), _vm._v(" "), _c('th', [_vm._v("EMAIL")]), _vm._v(" "), _c('th', {
+    attrs: {
       "lass": "text-center"
     }
   }, [_vm._v("STATUS")]), _vm._v(" "), _c('th', {
     attrs: {
       "lass": "text-center"
     }
-  }, [_vm._v("SEX")]), _vm._v(" "), _c('th', [_vm._v("TERM OFFICE")]), _vm._v(" "), _c('th', [_vm._v("FAX")]), _vm._v(" "), _c('th', [_vm._v("CELLPHONE")]), _vm._v(" "), _c('th', [_vm._v("EMAIL")]), _vm._v(" "), _c('th', {
+  }, [_vm._v("SEX")]), _vm._v(" "), _c('th', [_vm._v("TERM OFFICE")]), _vm._v(" "), _c('th', [_vm._v("FAX")]), _vm._v(" "), _c('th', {
     attrs: {
       "width": "150"
     }
